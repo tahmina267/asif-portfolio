@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Mizanur Rahman (Asif), software engineer in Dhaka. Desktop apps, developer tools and security platforms.">
+<meta name="theme-color" content="#09080f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2309080f%27/%3E%3Ctext x=%2732%27 y=%2742%27 font-family=%27Arial%27 font-weight=%27900%27 font-size=%2728%27 fill=%27%23c2a4ff%27 text-anchor=%27middle%27%3EMR%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<title>Mizanur Rahman · Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: Redoyan-style scroll story. Fixed frame (top bar, side icons, resume). Sections: about, what I do, career, my work (sideways), tech stack, footer. Byte the robot is the character. */
+:root{
+  --bg:#09080f; --ink:#f4f1ea; --dim:#9b96a8; --faint:#8a849a; --line:#25222f;
+  --violet:#a78bfa; --orchid:#d66bff; --marigold:#ffc93c; --red:#ff5a5a; --pink:#ff6fb5; --green:#3ddc84; --blue:#5b8cff;
+  --display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--body);overflow-x:clip}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+a{color:inherit}
+.glow{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0}
+.g1{width:460px;height:460px;left:-160px;top:-120px;background:#c04dff;opacity:.45}
+.g2{width:420px;height:420px;right:-200px;bottom:-140px;background:#6b4dff;opacity:.3}
+
+/* fixed frame */
+.top{position:fixed;inset:0 0 auto;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;
+  padding:22px max(28px,env(safe-area-inset-right,0px)) 18px max(28px,env(safe-area-inset-left,0px));font:500 14px var(--mono);letter-spacing:.06em;
+  background:linear-gradient(var(--bg) 40%,transparent)}
+.top .mono{font:800 18px var(--display);letter-spacing:0;text-decoration:none}
+.top .mail{color:var(--dim);text-decoration:none}
+.top nav{justify-self:end;display:flex;gap:clamp(16px,4vw,60px)}
+.top nav a{text-decoration:none;text-transform:uppercase}
+.top nav a:hover,.top .mail:hover{color:var(--violet)}
+.side{position:fixed;left:max(24px,env(safe-area-inset-left,0px));bottom:36px;z-index:20;display:grid;gap:14px}
+.side a{display:grid;place-items:center;width:40px;height:40px;border-radius:10px}
+.side a:hover{color:var(--violet);background:#ffffff10}
+.side svg{width:20px;height:20px;fill:currentColor}
+.resume{position:fixed;right:max(28px,env(safe-area-inset-right,0px));bottom:40px;z-index:20;font:600 14px var(--mono);letter-spacing:.3em;color:var(--dim);text-decoration:none}
+.resume:hover{color:var(--violet)}
+
+section{position:relative;z-index:1;padding-left:max(96px,env(safe-area-inset-left,0px));padding-right:max(96px,env(safe-area-inset-right,0px))}
+.eyebrow{font:600 clamp(14px,1.4vw,19px) var(--mono);letter-spacing:.35em;color:var(--violet)}
+
+/* loader */
+.loader{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:#e9e6ef;overflow:hidden;transition:opacity .45s,visibility .45s}
+.loader.done{opacity:0;visibility:hidden}
+.loader .words{position:absolute;display:flex;gap:5vw;white-space:nowrap;font:800 clamp(52px,10vw,140px)/1 var(--display);color:#09080f;letter-spacing:-.03em;animation:slide 3.2s linear infinite}
+@keyframes slide{to{transform:translateX(-35%)}}
+.loader .pill{position:relative;display:flex;gap:40px;align-items:center;padding:26px 42px;border-radius:999px;background:#09080f;color:#fff;font:600 18px var(--mono);box-shadow:0 26px 60px #0005}
+.loader .pill::before{content:"";position:absolute;inset:-3px;border-radius:inherit;padding:3px;background:conic-gradient(from var(--a,0deg),var(--violet),var(--orchid),transparent 40%,transparent);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.loader .pill b{color:var(--violet);min-width:4ch;text-align:right;font-variant-numeric:tabular-nums}
+
+/* 1 · about */
+.about{min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:48px;padding-top:110px;padding-bottom:60px}
+.stagebox{position:relative;justify-self:center;width:min(540px,100%);aspect-ratio:1/1.02}
+.about h1{font:800 clamp(52px,7vw,104px)/.9 var(--display);letter-spacing:-.04em;margin:14px 0 18px}
+.about h1 span{color:var(--violet)}
+.about p{font:500 clamp(18px,1.55vw,22px)/1.5 var(--body);max-width:30em;margin:0 0 12px}
+.about p.dim{color:var(--dim);font-size:clamp(15px,1.15vw,17px)}
+.hint{display:inline-flex;gap:8px;align-items:center;margin-top:14px;font:500 13px var(--mono);color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+.hint kbd{font:600 12px var(--mono);border:1px solid #ffffff40;border-bottom-width:3px;border-radius:5px;padding:0 6px;color:var(--ink)}
+.robot{position:absolute;left:50%;top:3%;width:70%;transform:translateX(-50%);z-index:2;filter:drop-shadow(0 30px 40px #0009);cursor:pointer}
+.robot .bob{animation:bob 3s ease-in-out infinite;transform-origin:center bottom}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.robot .lid{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+.robot .armL{transform-box:fill-box;transform-origin:90% 10%;animation:tapL .6s ease-in-out infinite alternate}
+.robot .armR{transform-box:fill-box;transform-origin:10% 10%;animation:tapR .6s ease-in-out infinite alternate;animation-delay:-.3s}
+.robot .spark{animation:twinkle 2.4s ease-in-out infinite}
+@keyframes twinkle{50%{opacity:.35}}
+.robot .chest{animation:pulse 1.6s ease-in-out infinite}
+@keyframes tapL{to{transform:rotate(-7deg) translateY(4px)}}
+@keyframes tapR{to{transform:rotate(7deg) translateY(4px)}}
+.robot .bulb{animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.robot .screen-text{font:600 22px var(--mono)}
+.kb{position:absolute;left:50%;bottom:2%;width:92%;transform:translateX(-50%);perspective:900px;z-index:1}
+.kb .plate{display:grid;grid-template-columns:repeat(8,1fr);gap:9px;padding:16px;border-radius:18px;background:#15121e;border:1px solid #2c2838;transform:rotateX(58deg) rotateZ(-6deg);transform-origin:50% 100%;box-shadow:0 30px 0 #0c0a12,0 50px 60px #0008}
+.key{aspect-ratio:1;border-radius:9px;display:grid;place-items:center;font:700 14px var(--mono);color:var(--c);border:1.5px solid color-mix(in srgb,var(--c) 70%,transparent);background:color-mix(in srgb,var(--c) 8%,#15121e);box-shadow:0 5px 0 color-mix(in srgb,var(--c) 35%,#0c0a12);transition:transform .08s,background .08s,box-shadow .08s}
+.key.down{transform:translateY(4px);background:color-mix(in srgb,var(--c) 55%,#15121e);color:#09080f;box-shadow:0 1px 0 color-mix(in srgb,var(--c) 35%,#0c0a12),0 0 26px var(--c)}
+.byte{position:absolute;z-index:4;font:600 13px var(--mono);color:var(--c);padding:2px 7px;border-radius:6px;background:#09080fcc;border:1px solid color-mix(in srgb,var(--c) 60%,transparent);pointer-events:none;animation:up 1.2s ease-out forwards}
+@keyframes up{from{opacity:0;transform:translate(-50%,0)}15%{opacity:1}to{opacity:0;transform:translate(-50%,-70px)}}
+.bubble{position:absolute;z-index:3;left:2%;top:8%;padding:8px 12px;border-radius:12px 12px 12px 2px;background:#fff;color:#09080f;font:600 13px var(--mono);box-shadow:0 10px 24px #0006;max-width:62%;transform-origin:0 100%;animation:pop .4s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+
+/* 2 · what I do */
+.whatido{min-height:100vh;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:center;padding-top:110px;padding-bottom:80px}
+.cards{display:grid;gap:18px}
+.bracket{position:relative;padding:22px 24px;cursor:pointer;background:none;border:0;text-align:left;color:inherit;font:inherit;width:100%}
+.bracket::before,.bracket::after{content:"";position:absolute;width:16px;height:16px;border:2px solid var(--ink);transition:width .3s,height .3s,border-color .3s}
+.bracket::before{left:0;top:0;border-right:0;border-bottom:0}
+.bracket::after{right:0;bottom:0;border-left:0;border-top:0}
+.bracket:hover::before,.bracket:hover::after,.bracket[aria-expanded="true"]::before,.bracket[aria-expanded="true"]::after{width:100%;height:100%;border-color:var(--violet)}
+.bracket h3{margin:0;font:700 clamp(22px,2.2vw,30px)/1.1 var(--display);letter-spacing:.01em;text-transform:uppercase}
+.bracket .sub{display:block;margin-top:6px;font:500 12px var(--mono);color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+.bracket p{margin:10px 0 0;color:var(--dim);font-size:15px;max-height:0;overflow:hidden;transition:max-height .45s ease}
+.bracket[aria-expanded="true"] p{max-height:200px}
+.bracket .tog{position:absolute;right:16px;top:20px;width:22px;height:22px;border:1.5px solid var(--dim);border-radius:4px;display:grid;place-items:center;font:600 14px var(--mono);color:var(--dim);transition:transform .3s}
+.bracket[aria-expanded="true"] .tog{transform:rotate(180deg);color:var(--violet);border-color:var(--violet)}
+
+/* 3 · career */
+.career{padding-top:120px;padding-bottom:120px}
+.career h2{text-align:center;margin:0 0 70px;font:600 clamp(40px,5vw,72px)/1.05 var(--display);letter-spacing:-.02em}
+.career h2 span{color:var(--violet)}
+.timeline{position:relative;max-width:1100px;margin:0 auto;display:grid;gap:56px}
+.timeline::before{content:"";position:absolute;left:calc(40% + 40px);top:10px;bottom:10px;width:2px;background:linear-gradient(transparent,var(--violet) 15%,var(--violet) 85%,transparent);opacity:.45}
+.tdot{position:absolute;left:calc(40% + 34px);top:0;width:14px;height:14px;border-radius:50%;background:var(--violet);box-shadow:0 0 0 6px #a78bfa33,0 0 24px var(--violet);transition:top .15s linear}
+.trow{display:grid;grid-template-columns:28% 12% 1fr;gap:40px;align-items:start;opacity:.4;transition:opacity .4s}
+.trow.on{opacity:1}
+.trow h3{margin:0;font:500 clamp(20px,1.9vw,26px)/1.2 var(--display)}
+.trow h3 small{display:block;margin-top:6px;font:500 13px var(--mono);color:var(--violet)}
+.trow .yr{font:600 clamp(26px,3vw,40px)/1 var(--display);text-align:right;font-variant-numeric:tabular-nums}
+.trow p{margin:4px 0 0 40px;color:var(--dim);font-size:15px;max-width:44ch}
+
+/* 4 · my work (sideways) */
+.work{padding:0}
+.work-track{position:relative}
+.work-pin{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.work-head{padding:84px max(96px,env(safe-area-inset-left,0px)) 14px;border-bottom:1px solid var(--line)}
+.work-head h2{margin:0;font:600 clamp(40px,5vw,72px)/1 var(--display);letter-spacing:-.02em}
+.work-head h2 span{color:var(--violet)}
+.reel{display:flex;flex:1;will-change:transform}
+.pcard{flex:0 0 min(440px,82vw);border-right:1px solid var(--line);padding:26px 30px;display:flex;flex-direction:column;gap:12px}
+.pcard .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.pcard .num{font:500 46px/1 var(--display);color:var(--ink)}
+.pcard .name{text-align:right;font:600 18px var(--display)}
+.pcard .name small{display:block;font:500 12px var(--mono);color:var(--faint);margin-top:2px}
+.pcard h4{margin:6px 0 0;font:500 18px var(--display)}
+.pcard .tools{font:400 13px var(--mono);color:var(--faint);margin:0}
+.cover{margin-top:10px;aspect-ratio:16/9;max-height:42vh;border-radius:10px;position:relative;overflow:hidden;display:grid;place-items:center;text-align:center;padding:20px;
+  background:radial-gradient(120% 90% at 30% 20%,color-mix(in srgb,var(--c) 55%,#0d1b2e),#071018 75%);border:1px solid #ffffff14}
+.cover b{position:relative;z-index:1;font:800 clamp(24px,2.4vw,34px)/1 var(--display);letter-spacing:-.02em;text-shadow:0 2px 20px #0008}
+.cover i{position:relative;z-index:1;display:block;font:500 11px var(--mono);font-style:normal;color:#ffffffcc;margin-top:6px}
+.cover svg{position:absolute;inset:auto 0 0 0;width:100%;height:46%;opacity:.55}
+.pcard.more{justify-content:center;align-items:center;text-align:center}
+.pcard.more h4{font:600 28px var(--display)}
+.pill-btn{display:inline-block;margin-top:14px;padding:10px 18px;border-radius:999px;background:var(--violet);color:#120a24;font:600 13px var(--mono);text-decoration:none}
+.pill-btn.ghost{background:none;border:1px solid var(--line);color:var(--ink)}
+
+/* 5 · tech stack */
+.stack{padding-top:140px;padding-bottom:140px;text-align:center;overflow:hidden}
+.stack h2{margin:0 0 50px;font:600 clamp(44px,6vw,88px)/1 var(--display);letter-spacing:.02em;text-transform:uppercase}
+.tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;max-width:980px;margin:0 auto;perspective:900px}
+.tiles-in{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;transform:rotateX(28deg);transform-origin:50% 0}
+.tile{width:74px;height:74px;border-radius:12px;display:grid;place-items:center;gap:2px;background:#15121eaa;border:1px solid #2c2838;position:relative;transition:transform .2s,border-color .2s,background .2s}
+.tile svg{width:26px;height:26px;fill:#e9e6f0;transition:fill .2s}
+.tile span{font:500 9px var(--mono);color:var(--faint);max-width:68px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile:hover{transform:translateY(-6px);border-color:var(--brand,var(--violet));background:#1d1829}
+.tile:hover svg{fill:var(--brand,#fff)}
+.stack-glow{position:absolute;left:50%;bottom:-140px;width:900px;height:380px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(#7c3aed66,transparent 70%);filter:blur(30px);z-index:-1}
+
+/* 6 · footer */
+.foot{padding-top:120px;padding-bottom:60px}
+.foot .ctas{display:flex;justify-content:center;gap:12px;margin-bottom:70px}
+.foot h2{margin:0 0 40px;font:500 clamp(40px,6vw,84px)/1 var(--display);letter-spacing:.01em;text-transform:uppercase}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.fgrid small{display:block;font:500 12px var(--mono);color:var(--faint);margin-bottom:4px}
+.fgrid .v{font:500 15px var(--body);margin-bottom:18px;word-break:break-word}
+.fgrid ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fgrid li a{display:inline-flex;gap:6px;font:500 18px var(--display);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px}
+.fgrid li a:hover{color:var(--violet);border-color:var(--violet)}
+.fgrid .credit{font:500 18px var(--display)}
+.fgrid .credit span{color:var(--violet)}
+.note{text-align:center;color:var(--faint);font:500 12px var(--mono);margin:30px 0 0}
+
+@media (max-width:900px){
+  section{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+  .top{grid-template-columns:auto 1fr}.top .mail{display:none}
+  .side{display:none}.resume{bottom:20px}
+  .about,.whatido{grid-template-columns:minmax(0,1fr)}
+  .wid-left{min-height:340px}.wid-left h2{position:relative;transform:none;top:0}  .timeline::before,.tdot{display:none}
+  .trow{grid-template-columns:1fr auto;gap:8px 16px}.trow p{grid-column:1/-1;margin:0}
+  .work-head{padding:90px 20px 14px}
+  .fgrid{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+/* ===== Redoyan-style parts, rebuilt for Asif ===== */
+:root{--accent:#c2a4ff}
+
+/* mouse: soft lilac dot that trails the pointer and inverts what it covers */
+.cursor-main{--size:50px;position:fixed;top:calc(var(--size)/-2);left:calc(var(--size)/-2);width:var(--size);height:var(--size);border-radius:50px;pointer-events:none;z-index:99;
+  background:#e6c3ff;box-shadow:0 0 30px #af83ff;mix-blend-mode:difference;transition:top .3s ease-out,left .3s ease-out,width .3s ease-out,height .3s ease-out}
+.cursor-main.cursor-disable{--size:0px}
+.cursor-main.cursor-icons{top:10px;left:10px;width:30px;height:calc(var(--cursorH) - 20px);transition:all .5s ease-out,height .5s ease-in-out}
+@media (pointer:coarse){.cursor-main{display:none}}
+
+/* career */
+.career2{display:flex;flex-direction:column;align-items:center;padding:120px max(40px,env(safe-area-inset-right,0px)) 160px max(40px,env(safe-area-inset-left,0px));position:relative;z-index:1}
+.career2 h2{font:400 70px/70px var(--display);text-align:center;margin:50px 0 90px;background:linear-gradient(0deg,#7f40ff,#fff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.career2 h2 span{font-weight:300}
+.c-info{position:relative;display:flex;flex-direction:column;width:min(1200px,100%);margin:0 auto}
+.c-line{position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:3px;height:calc(100% + 50px);background-image:linear-gradient(to top,#aa42ff 20%,var(--accent) 50%,transparent 95%);max-height:0%;opacity:0}
+.c-dot{position:absolute;bottom:0;left:50%;transform:translate(-50%,50%);width:10px;height:10px;border-radius:50px;background:#aa42ff;
+  box-shadow:0 0 5px 2px #d29bff,0 0 15px 8px #d097ff,0 0 110px 20px #f2c0ff;animation:cdot .8s linear infinite}
+@keyframes cdot{50%{box-shadow:0 0 5px 2px #d29bff,0 0 15px 8px #d097ff,0 0 60px 10px #f2c0ff}}
+.c-box{display:flex;justify-content:space-between;margin-bottom:50px;opacity:0;transition:opacity .5s}
+.c-box.on{opacity:1}
+.c-in{display:flex;width:40%;justify-content:space-between;gap:50px}
+.c-in h4{font:500 33px/30px var(--display);letter-spacing:.8px;margin:0}
+.c-in h5{font:400 20px var(--body);letter-spacing:.7px;margin:10px 0;color:var(--accent)}
+.c-in h3{font:500 48px/45px var(--display);margin:0;white-space:nowrap}
+.c-range{display:inline-flex;align-items:center;gap:7px;margin-top:2px;padding:5px 11px;border-radius:999px;border:1px solid #3a3352;background:#ffffff08;font:500 12.5px var(--mono);color:#d9d3ec;white-space:nowrap}
+.c-range::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.c-range.live::before{background:#3ddc84;box-shadow:0 0 8px #3ddc84}
+.c-box p{width:40%;font:300 14px/20px var(--body);margin:0;color:#ddd}
+
+/* my work: pinned, slides sideways */
+.work2{position:relative;z-index:1}
+.w-pin{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;padding-left:max(120px,env(safe-area-inset-left,0px))}
+.w-pin h2{margin:100px 0 0;font:500 70px var(--display)}
+.w-pin h2 span{color:var(--accent)}
+.w-flex{display:flex;height:100%;margin-left:-80px;padding-right:120px;position:relative;will-change:transform}
+.w-flex::before,.w-flex::after{content:"";position:absolute;left:50%;top:0;width:50000vw;height:1px;background:#363636;transform:translateX(-50%)}
+.w-flex::after{top:100%}
+.w-box{width:600px;flex-shrink:0;padding:80px;display:flex;flex-direction:column;gap:50px;justify-content:start;border-right:1px solid #363636;box-sizing:border-box}
+.w-flex .w-box:nth-child(2n){flex-direction:column-reverse}
+.w-title{display:flex;justify-content:space-between;width:100%;margin-bottom:20px}
+.w-title>div{text-align:right}
+.w-title h3{font:600 50px/50px var(--display);margin:0}
+.w-title h4{font:500 26px var(--display);margin:0}
+.w-title p{margin:3px 0 0;font-weight:200;color:#adacac}
+.w-info>h4{font:500 26px var(--display);margin:0}
+.w-info>p{margin:3px 0 0;font-weight:200;color:#adacac}
+.w-img{position:relative;width:100%;aspect-ratio:16/9;border-radius:6px;overflow:hidden;display:grid;place-items:center;text-align:center;padding:20px;
+  background:radial-gradient(120% 90% at 30% 20%,color-mix(in srgb,var(--c) 55%,#0d1b2e),#071018 75%);border:1px solid #ffffff14;transition:transform .4s}
+.w-img:hover{transform:scale(1.02)}
+.w-img b{position:relative;z-index:1;font:800 34px/1 var(--display);letter-spacing:-.02em;text-shadow:0 2px 20px #0008}
+.w-img i{position:relative;z-index:1;display:block;font:500 12px var(--mono);font-style:normal;color:#ffffffcc;margin-top:8px}
+.w-img svg{position:absolute;inset:auto 0 0 0;width:100%;height:46%;opacity:.55}
+.w-cta{justify-content:center!important;align-items:center;text-align:center}
+.w-cta h3{font:500 34px var(--display);margin:0}
+.w-cta p{color:#adacac;margin:8px 0 0}
+.see-all{display:inline-block;margin-top:18px;padding:12px 22px;border-radius:999px;background:var(--accent);color:#120a24;font:600 14px var(--mono);text-decoration:none}
+
+/* tech stack: moving background, dark overlay, glass pyramid */
+.tech2{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:80px 0}
+.t-bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:#0b080c}
+.t-bg i{position:absolute;width:60vw;height:60vw;border-radius:50%;filter:blur(80px);opacity:.55;animation:drift 18s ease-in-out infinite alternate}
+.t-bg i:nth-child(1){left:-10vw;top:-10vw;background:#7c3aed}
+.t-bg i:nth-child(2){right:-15vw;top:10vw;background:#c026d3;animation-duration:22s}
+.t-bg i:nth-child(3){left:20vw;bottom:-25vw;background:#4f46e5;animation-duration:26s}
+@keyframes drift{to{transform:translate(8vw,6vw) scale(1.15)}}
+.t-bg::after{content:"";position:absolute;inset:0;background:#00000080}
+.t-bg::before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(#0b080c,transparent 150px,transparent calc(100% - 150px),#0b080c)}
+.t-content{position:relative;z-index:2;width:100%;max-width:1000px;margin:0 auto;padding:0 20px}
+.t-content h2{font:400 70px var(--display);text-align:center;text-transform:uppercase;margin:0 0 50px;background:linear-gradient(180deg,#fff,#c2a4ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.t-pyr{display:flex;flex-direction:column;align-items:center;gap:12px}
+.t-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.t-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:62px;min-height:72px;padding:8px 4px;border-radius:10px;background:#ffffff08;border:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:all .3s ease;text-decoration:none}
+.t-item:hover{transform:translateY(-6px) scale(1.08);background:#c2a4ff1a;border-color:var(--accent);box-shadow:0 8px 30px #c2a4ff40}
+.t-item{--fill:#e9e6f0}
+.t-item svg{width:30px;height:30px;opacity:.9;transition:opacity .3s}
+.t-item svg *{transition:fill .3s}
+.t-item:hover{--fill:var(--brand)}
+.t-item:hover svg{opacity:1}
+.t-item span{font:500 7.5px/1.15 var(--mono);color:#cfcfcf;text-align:center;max-width:58px;overflow-wrap:anywhere}
+
+@media (max-width:1024px){
+  .career2 h2{font-size:50px;line-height:50px}
+  .c-in h4{font-size:22px;line-height:24px;width:180px}
+  .c-in h3{font-size:34px}
+}
+@media (max-width:768px){
+  .c-line{left:10px;transform:none}
+  .c-box{flex-direction:column;gap:10px;padding-left:34px}
+  .c-in,.c-box p{width:100%}
+  .w-pin{position:relative;height:auto;padding-left:20px}
+  .w-flex{flex-direction:column;margin-left:0;padding-right:20px}
+  .w-box{width:100%;padding:40px 0;border-right:0;border-bottom:1px solid #363636}
+  .w-flex .w-box:nth-child(2n){flex-direction:column}
+  .t-content h2{font-size:44px}
+}
+@media (prefers-reduced-motion:reduce){.t-bg i,.c-dot{animation:none}}
+
+/* ===== what I do: live coding rig ===== */
+.wid-left{position:relative;display:grid;gap:18px;align-content:center}
+.wid-h{margin:0;display:flex;flex-wrap:wrap;gap:0 .25em;font:800 clamp(64px,8vw,128px)/.88 var(--display);letter-spacing:-.03em}
+.wid-h span{display:block}
+.wid-h .outline{background:linear-gradient(90deg,#c2a4ff,#7f40ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.wid-cap{margin:0;font:500 13px var(--mono);color:var(--faint)}
+.rig{position:relative;width:min(560px,100%);margin-top:18px}
+.rig::before{content:"";position:absolute;left:10%;right:10%;top:20%;height:60%;background:radial-gradient(#7c3aed55,transparent 70%);filter:blur(30px);z-index:-1}
+.mon{border-radius:14px;background:#15121f;border:1px solid #3a3352;box-shadow:0 0 0 6px #1b1726,0 30px 60px #000a,0 0 60px #7c3aed33;overflow:hidden}
+.mon-bar{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:1px solid #2a2538;background:#1b1726;font:500 12px var(--mono);color:var(--dim)}
+.mon-bar i{width:10px;height:10px;border-radius:50%;background:#ff5f57}.mon-bar i:nth-child(2){background:#febc2e}.mon-bar i:nth-child(3){background:#28c840}
+.mon-bar span{margin-left:10px;padding:3px 10px;border-radius:6px;background:#0c0a14;color:#d9d3ec}
+.mon-code{margin:0;min-height:208px;padding:16px 18px 18px 0;font:500 14px/1.65 var(--mono);color:#e9e6f0;white-space:pre;overflow:hidden;counter-reset:ln;position:relative}
+.mon-code code{display:block}
+.mon-code .ln{display:inline-block;width:38px;text-align:right;margin-right:16px;color:#4b4566;user-select:none}
+.mon-caret{display:inline-block;width:8px;height:16px;background:var(--violet);vertical-align:-3px;margin-left:2px;animation:caret 1s steps(2,jump-none) infinite}
+@keyframes caret{50%{opacity:0}}
+.k-kw{color:#c792ea}.k-fn{color:#82aaff}.k-st{color:#c3e88d}.k-nu{color:#f78c6c}.k-cm{color:#676e95;font-style:italic}.k-ty{color:#ffcb6b}
+.mon-neck{width:56px;height:58px;margin:0 auto;background:linear-gradient(#2a2538,#1b1726)}
+.mon-foot{width:180px;height:10px;margin:0 auto;border-radius:6px 6px 2px 2px;background:#2a2538}
+.desk-top{height:12px;border-radius:6px;background:linear-gradient(#3a3352,#26213a);margin-top:-2px;box-shadow:0 20px 40px #000a}
+.mini-kb{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:grid;grid-template-columns:repeat(14,1fr);gap:3px;width:62%;padding:6px;border-radius:8px;background:#1b1726;border:1px solid #2a2538}
+.mini-kb i{height:9px;border-radius:2px;background:#2d2742;transition:background .08s,box-shadow .08s}
+.mini-kb i.hit{background:var(--violet);box-shadow:0 0 10px var(--violet)}
+.mug{position:absolute;right:6%;bottom:12px;width:34px;height:38px;border-radius:4px 4px 10px 10px;background:linear-gradient(#ff6fb5,#c2448a)}
+.mug::after{content:"";position:absolute;right:-12px;top:8px;width:12px;height:18px;border:4px solid #c2448a;border-left:0;border-radius:0 10px 10px 0}
+.mug i{position:absolute;bottom:42px;width:4px;height:18px;border-radius:4px;background:#ffffff40;animation:steam 2.4s ease-in-out infinite}
+.mug i:nth-child(1){left:6px}.mug i:nth-child(2){left:15px;animation-delay:-.8s}.mug i:nth-child(3){left:24px;animation-delay:-1.6s}
+@keyframes steam{0%{transform:translateY(6px) scaleY(.6);opacity:0}40%{opacity:.8}100%{transform:translateY(-14px) scaleY(1.1);opacity:0}}
+.bracket.live h3{color:var(--violet)}
+@media (max-width:900px){.rig{margin-inline:auto}.mon-code{font-size:12px;min-height:180px}}
+@media (prefers-reduced-motion:reduce){.mon-caret,.mug i{animation:none}}
+
+/* ===== 3D keycap background ===== */
+#bg3d{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0;transition:opacity 1.2s}
+#bg3d.on{opacity:.42}
+
+[hidden]{display:none!important}
+/* ===== work details modal ===== */
+.w-box:not(.w-cta){cursor:pointer;transition:background .25s}
+.w-box:not(.w-cta):hover{background:#ffffff05}
+.w-box:not(.w-cta):hover .w-title h4{color:var(--accent)}
+.w-info::after{content:"Click to see details →";display:block;margin-top:14px;font:500 12px var(--mono);color:var(--accent);opacity:.8}
+.pm{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px}
+.pm-scrim{position:absolute;inset:0;background:#05040acc;backdrop-filter:blur(6px);opacity:0;transition:opacity .25s}
+.pm-card{position:relative;width:min(760px,100%);max-height:88vh;overflow:auto;border-radius:18px;background:#120f1b;border:1px solid #2c2838;box-shadow:0 40px 80px #000c;
+  transform:translateY(24px) scale(.97);opacity:0;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s}
+.pm.open .pm-scrim{opacity:1}.pm.open .pm-card{transform:none;opacity:1}
+.pm-x{position:absolute;right:14px;top:14px;z-index:2;width:38px;height:38px;border-radius:10px;border:1px solid #ffffff30;background:#00000060;color:#fff;cursor:pointer;font-size:15px}
+.pm-cover{position:relative;height:220px;display:grid;place-content:center;text-align:center;overflow:hidden;background:radial-gradient(120% 90% at 30% 20%,color-mix(in srgb,var(--c) 55%,#0d1b2e),#071018 75%)}
+.pm-cover b{position:relative;z-index:1;font:800 44px/1 var(--display);letter-spacing:-.02em}
+.pm-cover i{position:relative;z-index:1;font:500 13px var(--mono);font-style:normal;color:#ffffffcc;margin-top:8px}
+.pm-cover svg{position:absolute;inset:auto 0 0 0;width:100%;height:46%;opacity:.55}
+.pm-num{position:absolute;left:24px;top:18px;font:600 40px var(--display);opacity:.5}
+.pm-in{padding:26px 30px 32px}
+.pm-in small{font:500 12px var(--mono);color:var(--accent);letter-spacing:.06em;text-transform:uppercase}
+.pm-in h3{margin:6px 0 10px;font:700 34px/1.1 var(--display)}
+.pm-sum{margin:0 0 18px;color:#cfcbd8;font-size:16px}
+.pm-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:22px}
+.pm-facts div{padding:12px 14px;border-radius:12px;background:#1b1727;border:1px solid #2c2838}
+.pm-facts b{display:block;font:800 26px/1.1 var(--display);color:#fff}
+.pm-facts span{font-size:13px;color:#a8a3b6}
+.pm-in h4{margin:0 0 8px;font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#a8a3b6}
+.pm-in ul{margin:0 0 20px;padding-left:18px;display:grid;gap:8px;color:#e9e6f0}
+.pm-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px}
+.pm-chips span{font:500 12px var(--mono);padding:4px 10px;border-radius:999px;border:1px solid #3a3352;color:#d9d3ec}
+.pm-note{margin:0;font:500 12px var(--mono);color:#7d778c}
+@media (prefers-reduced-motion:reduce){.pm-card,.pm-scrim{transition:none}}
+
+/* ===== sidebar contact ===== */
+.side a,.side .loc{position:relative;display:grid;place-items:center;width:40px;height:40px;border-radius:10px;color:var(--ink)}
+.side .loc svg{width:20px;height:20px;fill:currentColor}
+.side a::after,.side .loc::after{content:attr(data-tip);position:absolute;left:calc(100% + 12px);top:50%;transform:translate(-6px,-50%);white-space:nowrap;padding:6px 10px;border-radius:8px;
+  background:#1b1727;border:1px solid #3a3352;color:#f4f1ea;font:500 12px var(--mono);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.side a:hover::after,.side a:focus-visible::after,.side .loc:hover::after,.side .loc:focus-visible::after{opacity:1;transform:translate(0,-50%)}
+.side .loc:hover{color:var(--violet);background:#ffffff10}
+@media (max-width:900px){
+  .side{display:flex!important;left:50%;bottom:14px;transform:translateX(-50%);gap:6px;padding:6px 8px;border-radius:14px;background:#120f1bcc;border:1px solid #2c2838;backdrop-filter:blur(10px)}
+  .side a::after,.side .loc::after{display:none}
+  .resume{bottom:78px}
+}
+
+.w-img.has-art,.pm-cover.has-art{padding:0;background:#05060a;display:block}
+.w-img .cover-art,.pm-cover .cover-art{display:block;position:static;inset:auto;width:100%;height:100%;opacity:1}
+.pm-cover.has-art{height:auto;aspect-ratio:16/9}
+
+@media (pointer:coarse){.top nav a,.top .mono,.top .mail{display:inline-flex;align-items:center;min-height:36px;padding:0 6px}.resume{display:inline-flex;align-items:center;min-height:36px;padding:0 6px}}
+
+/* hidden input that brings up the phone keyboard */
+.kb-input{position:absolute;left:50%;bottom:6%;width:60%;height:40px;transform:translateX(-50%);opacity:0;border:0;padding:0;font-size:16px;color:transparent;background:transparent;caret-color:transparent;z-index:0}
+.kb{cursor:pointer}
+.key{cursor:pointer;touch-action:manipulation}
+.hint-touch{display:none}
+@media (pointer:coarse){.hint-desk{display:none}.hint-touch{display:inline}}
+
+/* ===== Byte types: robot behind the keyboard, hands on the keys ===== */
+.robot{top:0!important;width:64%!important;z-index:1!important}
+.robot .armL,.robot .armR{animation:none}
+.kb{z-index:2!important;bottom:25%!important}
+.robot-hands{position:absolute;left:50%;top:0;width:64%;transform:translateX(-50%);z-index:3;pointer-events:none;overflow:visible}
+.robot-hands .handL,.robot-hands .handR{transform-box:fill-box;transform-origin:center;animation:tapHand .28s ease-in-out infinite alternate}
+.robot-hands .handR{animation-delay:-.14s}
+@keyframes tapHand{from{transform:translateY(-9px)}to{transform:translateY(3px)}}
+.robot-hands{filter:drop-shadow(0 6px 6px #0007)}
+@media (prefers-reduced-motion:reduce){.robot-hands .handL,.robot-hands .handR{animation:none}}
+
+/* ===== hire me panel ===== */
+button.pill-btn{border:0;cursor:pointer;font:600 13px var(--mono)}
+.hire-card{width:min(560px,100%);padding:30px 28px 28px}
+.hire-head h3{margin:14px 0 8px;font:700 32px/1.1 var(--display)}
+.hire-head p{margin:0 0 20px;color:#cfcbd8}
+.hire-list{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
+.hire-list li{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;background:#1b1727;border:1px solid #2c2838}
+.hi-ic{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:#c2a4ff22;color:#c2a4ff;font:700 16px var(--mono)}
+.hire-list small{display:block;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#a8a3b6}
+.hire-list b{display:block;font:600 15px var(--body);color:#fff;overflow-wrap:anywhere}
+.hi-act{display:flex;gap:6px}
+.hi-btn{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border-radius:10px;border:1px solid #3a3352;background:none;color:#e9e6f0;font:600 12px var(--mono);text-decoration:none;cursor:pointer}
+.hi-btn.main{background:#c2a4ff;border-color:#c2a4ff;color:#120a24}
+.hi-tz{font:500 12px var(--mono);color:#a8a3b6;white-space:nowrap}
+.hire-cv{display:inline-flex}
+@media (max-width:480px){.hire-list li{grid-template-columns:36px minmax(0,1fr)}.hi-act{grid-column:1/-1}.hi-ic{width:36px;height:36px}}
+
+/* hire me: choose a way to reach out */
+.hire-card{width:min(620px,100%)}
+.hire-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.h-opt{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:20px 12px 18px;border-radius:16px;background:#1b1727;border:1px solid #2c2838;text-decoration:none;color:#fff;transition:transform .2s,border-color .2s,background .2s}
+.h-opt:hover,.h-opt:focus-visible{transform:translateY(-4px);border-color:var(--o);background:color-mix(in srgb,var(--o) 12%,#1b1727)}
+.h-ic{display:grid;place-items:center;width:54px;height:54px;border-radius:16px;background:color-mix(in srgb,var(--o) 18%,transparent);margin-bottom:4px}
+.h-ic svg{width:26px;height:26px;fill:var(--o)}
+.h-opt b{font:700 17px var(--display)}
+.h-opt small{font:500 11.5px var(--mono);color:#a8a3b6;overflow-wrap:anywhere}
+.hire-foot{margin:18px 0 0;text-align:center;font:500 12.5px var(--mono);color:#a8a3b6}
+@media (max-width:520px){.hire-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.h-opt{padding:16px 8px}}
+</style>
+</head>
+<body>
+
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="words"><span>SOFTWARE ENGINEER</span><span>•</span><span>RUST</span><span>•</span><span>REACT</span><span>•</span><span>SECURITY</span><span>•</span><span>SOFTWARE ENGINEER</span></div>
+  <div class="pill"><span>BOOTING</span><b id="pct">0%</b></div>
+</div>
+<canvas id="bg3d" aria-hidden="true"></canvas>
+<div class="glow g1"></div><div class="glow g2"></div>
+
+<header class="top">
+  <a class="mono" href="#about">MR</a>
+  <a class="mail" href="mailto:mizanurasif02@gmail.com">mizanurasif02@gmail.com</a>
+  <nav aria-label="Main"><a href="#about">About</a><a href="#work">Work</a><a href="#contact">Contact</a></nav>
+</header>
+<div class="side" aria-label="Contact and profiles">
+  <a href="https://github.com/mizanurasif" target="_blank" rel="noopener" aria-label="GitHub" data-tip="github.com/mizanurasif"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+  <a href="https://www.linkedin.com/in/mizanur-rahman-asif" target="_blank" rel="noopener" aria-label="LinkedIn" data-tip="linkedin.com/in/mizanur-rahman-asif"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg></a>
+  <a href="mailto:mizanurasif02@gmail.com" aria-label="Email mizanurasif02@gmail.com" data-tip="mizanurasif02@gmail.com"><svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm9 7.2L4.4 7H4v.6l8 5.6 8-5.6V7h-.4L12 12.2Z"/></svg></a>
+  <a href="tel:+8801618070639" aria-label="Call +8801618070639" data-tip="+8801618070639"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"/></svg></a>
+  <span class="loc" tabindex="0" role="img" aria-label="Location: Dhaka, Bangladesh" data-tip="Dhaka, Bangladesh"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg></span>
+</div>
+<a class="resume" href="resume.pdf" download="Mizanur_Rahman_Resume.pdf">RESUME ▤</a>
+
+<!-- 1 · ABOUT -->
+<section class="about" id="about">
+  <div class="stagebox" id="stagebox">
+    <div class="bubble" id="bubble">hi! i'm byte, asif's robot 👋</div>
+    <svg class="robot" id="robot" viewBox="0 0 400 400" role="img" aria-label="Byte, a cute cartoon robot whose eyes follow your cursor">
+      <defs>
+        <linearGradient id="cb-body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9b4ff"/><stop offset="1" stop-color="#9a7cf4"/></linearGradient>
+        <linearGradient id="cb-screen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1ebff"/><stop offset="1" stop-color="#d7c8ff"/></linearGradient>
+      </defs>
+      <!-- sparkles -->
+      <g class="spark"><path d="M62 92 l6 14 l14 6 l-14 6 l-6 14 l-6 -14 l-14 -6 l14 -6 z" fill="#ff6fb5"/><path d="M338 62 l5 11 l11 5 l-11 5 l-5 11 l-5 -11 l-11 -5 l11 -5 z" fill="#ff6fb5"/>
+        <circle cx="96" cy="58" r="6" fill="none" stroke="#7fd8ff" stroke-width="3"/><circle cx="318" cy="118" r="6" fill="#ffc93c"/><circle cx="352" cy="138" r="4" fill="#a78bfa"/>
+        <path d="M74 150 h14 M81 143 v14 M330 96 h14 M337 89 v14" stroke="#e9e6f0" stroke-width="3" stroke-linecap="round"/></g>
+            <g class="bob">
+        <!-- antennae -->
+        <g stroke="#120d22" stroke-width="6" stroke-linecap="round"><line x1="148" y1="76" x2="148" y2="50"/><line x1="200" y1="72" x2="200" y2="44"/><line x1="252" y1="76" x2="252" y2="50"/></g>
+        <g class="bulb" fill="#ff6fb5" stroke="#120d22" stroke-width="5"><circle cx="148" cy="42" r="13"/><circle cx="200" cy="36" r="13"/><circle cx="252" cy="42" r="13"/></g>
+        <!-- ear pods -->
+        <rect x="70" y="132" width="42" height="74" rx="18" fill="url(#cb-body)" stroke="#120d22" stroke-width="6"/><path d="M80 150 v38" stroke="#120d22" stroke-width="4" stroke-linecap="round" opacity=".5"/>
+        <rect x="288" y="132" width="42" height="74" rx="18" fill="url(#cb-body)" stroke="#120d22" stroke-width="6"/><path d="M320 150 v38" stroke="#120d22" stroke-width="4" stroke-linecap="round" opacity=".5"/>
+        <!-- head -->
+        <rect x="98" y="72" width="204" height="160" rx="36" fill="url(#cb-body)" stroke="#120d22" stroke-width="7"/>
+        <rect x="114" y="88" width="172" height="128" rx="26" fill="#8a6be8" stroke="#120d22" stroke-width="4"/>
+        <rect x="122" y="96" width="156" height="112" rx="20" fill="url(#cb-screen)" stroke="#120d22" stroke-width="5"/>
+        <path d="M244 108 l16 -6 M236 122 l26 -10 M150 196 l14 -6" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity=".9"/>
+        <!-- face (eyes follow the cursor) -->
+        <g class="lid"><g id="pupils">
+          <circle cx="168" cy="150" r="26" fill="#120d22"/><circle cx="178" cy="139" r="9" fill="#fff"/><circle cx="160" cy="162" r="4" fill="#fff"/>
+          <circle cx="234" cy="150" r="26" fill="#120d22"/><circle cx="244" cy="139" r="9" fill="#fff"/><circle cx="226" cy="162" r="4" fill="#fff"/>
+        </g></g>
+        <path d="M190 182 q11 10 22 0" stroke="#120d22" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M140 184 q8 6 16 4 M246 188 q8 2 16 -4" stroke="#120d22" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".7"/>
+        <!-- neck -->
+        <rect x="172" y="230" width="56" height="10" rx="4" fill="#3b2d6b" stroke="#120d22" stroke-width="4"/><rect x="176" y="240" width="48" height="10" rx="4" fill="#3b2d6b" stroke="#120d22" stroke-width="4"/>
+        <!-- arms reaching down to the keyboard -->
+        <path d="M136 272 q-34 30 -30 92" stroke="#120d22" stroke-width="22" fill="none" stroke-linecap="round"/><path d="M136 272 q-34 30 -30 92" stroke="#3b2d6b" stroke-width="13" fill="none" stroke-linecap="round" stroke-dasharray="7 4"/>
+        <path d="M264 272 q34 30 30 92" stroke="#120d22" stroke-width="22" fill="none" stroke-linecap="round"/><path d="M264 272 q34 30 30 92" stroke="#3b2d6b" stroke-width="13" fill="none" stroke-linecap="round" stroke-dasharray="7 4"/>
+        <!-- body -->
+        <rect x="128" y="246" width="144" height="100" rx="26" fill="url(#cb-body)" stroke="#120d22" stroke-width="7"/>
+        <rect x="160" y="262" width="80" height="48" rx="12" fill="#8a6be8" stroke="#120d22" stroke-width="4"/>
+        <rect x="166" y="268" width="68" height="36" rx="9" fill="url(#cb-screen)" stroke="#120d22" stroke-width="4"/>
+        <circle class="chest" cx="184" cy="286" r="7" fill="#ff6fb5" stroke="#120d22" stroke-width="3"/><path d="M198 280 h26 M198 292 h18" stroke="#120d22" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="144" cy="270" r="5" fill="#ff6fb5" stroke="#120d22" stroke-width="2.5"/><circle cx="144" cy="286" r="5" fill="#ffc93c" stroke="#120d22" stroke-width="2.5"/>
+        <path d="M136 324 h128" stroke="#120d22" stroke-width="4" opacity=".35"/>
+      </g>
+    </svg>
+    <div class="kb"><div class="plate" id="plate"></div></div>
+    <svg class="robot-hands" viewBox="0 0 400 400" aria-hidden="true">
+      <g class="handL"><path d="M84 356 q8 -16 30 -12 q18 4 16 22 q-2 14 -18 16 h-16 q-16 -2 -14 -14 q0 -6 2 -12 z" fill="#b79cff" stroke="#120d22" stroke-width="6" stroke-linejoin="round"/><path d="M98 378 v8 M110 378 v9" stroke="#120d22" stroke-width="4" stroke-linecap="round"/></g>
+      <g class="handR"><path d="M316 356 q-8 -16 -30 -12 q-18 4 -16 22 q2 14 18 16 h16 q16 -2 14 -14 q0 -6 -2 -12 z" fill="#b79cff" stroke="#120d22" stroke-width="6" stroke-linejoin="round"/><path d="M302 378 v8 M290 378 v9" stroke="#120d22" stroke-width="4" stroke-linecap="round"/></g>
+    </svg>
+    <input id="kbInput" class="kb-input" type="text" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" aria-label="Type on Byte's keyboard">
+  </div>
+  <div>
+    <div class="eyebrow">ABOUT ME</div>
+    <h1>Mizanur <span>Rahman.</span></h1>
+    <p>I'm a software engineer from Dhaka. I build desktop apps, developer tools and security platforms, from the React UI down to the bytes on the wire.</p>
+    <p class="dim">At Samsung R&amp;D I wrote 80% of Device Manager and the parser behind the Samsung Ring. At Makebell I built a Rust security agent and took the company through ISO 27001. Byte, my robot, is typing the rest.</p>
+    <span class="hint"><span class="hint-desk">try it: <kbd>A</kbd><kbd>S</kbd><kbd>I</kbd><kbd>F</kbd> on your keyboard</span><span class="hint-touch">⌨ tap Byte's keyboard to type</span></span>
+  </div>
+</section>
+
+<!-- 2 · WHAT I DO -->
+<section class="whatido">
+  <div class="wid-left">
+    <h2 class="wid-h"><span>WHAT</span><span class="outline">I DO</span></h2>
+    <p class="wid-cap">// hover a card and watch the code change →</p>
+    <div class="rig" aria-hidden="true">
+      <div class="mon">
+        <div class="mon-bar"><i></i><i></i><i></i><span id="monFile">device_manager/src/main.rs</span></div>
+        <pre class="mon-code"><code id="monCode"></code><b class="mon-caret"></b></pre>
+      </div>
+      <div class="mon-neck"></div><div class="mon-foot"></div>
+      <div class="mini-kb" id="miniKb"></div>
+      <div class="mug"><i></i><i></i><i></i></div>
+      <div class="desk-top"></div>
+    </div>
+  </div>
+  <div class="cards">
+    <button class="bracket" type="button" aria-expanded="true"><span class="tog">⌄</span><h3>Desktop &amp; Dev Tools</h3><span class="sub">Tauri · React · Rust · C#</span>
+      <p>Cross-platform desktop apps and developer tools at Samsung R&amp;D: Device Manager (80% of the code), Tizen Doctor CLI and the Visual Studio extension for Tizen.</p></button>
+    <button class="bracket" type="button" aria-expanded="false"><span class="tog">⌄</span><h3>Full-Stack Web</h3><span class="sub">Next.js · Node.js · FastAPI · PostgreSQL</span>
+      <p>Marketplaces, portals and APIs: PrintForge with AI image-to-3D, TMPortal's shared UI kit, and an async FastAPI platform with OAuth 2.0.</p></button>
+    <button class="bracket" type="button" aria-expanded="false"><span class="tog">⌄</span><h3>Security Engineering</h3><span class="sub">Rust agents · ISO 27001 · ISMS</span>
+      <p>An MDR platform with a Rust device agent, an AI compliance platform, and a company taken through the ISO 27001 Stage 2 audit.</p></button>
+    <button class="bracket" type="button" aria-expanded="false"><span class="tog">⌄</span><h3>Byte Protocols</h3><span class="sub">Android · iOS · Samsung Ring</span>
+      <p>Byte protocols for new health-sensing modules, and one generic parser that replaced every Android parser with full backward compatibility.</p></button>
+  </div>
+</section>
+
+<!-- 3 · CAREER -->
+<section class="career2" id="career">
+  <h2>My career <span>&amp;</span><br> experience</h2>
+  <div class="c-info" id="cinfo">
+    <div class="c-line" id="cline"><div class="c-dot"></div></div>
+    <div class="c-box"><div class="c-in"><div><h4>Reading the next byte</h4><h5>Open to new roles</h5><span class="c-range live">Available now</span></div><h3>NOW</h3></div><p>Looking for my next team across frontend, backend, desktop and security work.</p></div>
+    <div class="c-box"><div class="c-in"><div><h4>Security Engineer</h4><h5>Makebell · Hong Kong</h5><span class="c-range">Jun 2026 – Aug 2026</span></div><h3>2026</h3></div><p>Built an MDR platform with a Rust agent that streams security telemetry, and an AI compliance platform that maps ISO 27001 controls to evidence. Completed the ISO 27001 Stage 2 audit.</p></div>
+    <div class="c-box"><div class="c-in"><div><h4>Software Engineer</h4><h5>Samsung R&amp;D · Dhaka</h5><span class="c-range">Mar 2024 – Sep 2026</span></div><h3>2024</h3></div><p>Wrote 80% of Device Manager (Tauri, React, Rust), unified every Samsung Ring byte parser into one, and built Tizen Doctor CLI and the Visual Studio extension for Tizen. Passed the Samsung SWC Professional exam.</p></div>
+    <div class="c-box"><div class="c-in"><div><h4>B.Sc. in CSE</h4><h5>KUET · Khulna</h5><span class="c-range">2019 – 2024</span></div><h3>2019</h3></div><p>Wrote my first parser for a compiler in Flex and Bison. Thesis on 3D brain tumor segmentation. Assistant General Secretary of Bit2Byte and member of SGIPC.</p></div>
+  </div>
+</section>
+
+<!-- 4 · MY WORK -->
+<section class="work2" id="work">
+  <div id="wtrack">
+    <div class="w-pin">
+      <h2>My <span>Work</span></h2>
+      <div class="w-flex" id="wflex"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · TECH STACK -->
+<section class="tech2" id="stack">
+  <div class="t-bg" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="t-content">
+    <h2>Tech Stack</h2>
+    <div class="t-pyr" id="tpyr"></div>
+  </div>
+</section>
+
+<!-- 6 · FOOTER -->
+<section class="foot" id="contact">
+  <div class="ctas"><a class="pill-btn ghost" href="#about">Play with Byte →</a><button class="pill-btn" type="button" id="hireBtn" aria-haspopup="dialog">Hire Me →</button></div>
+</section>
+
+
+<div class="pm hire" id="hireModal" role="dialog" aria-modal="true" aria-labelledby="hire-title" hidden>
+  <div class="pm-scrim" data-hclose></div>
+  <div class="pm-card hire-card">
+    <button class="pm-x" type="button" aria-label="Close" data-hclose>✕</button>
+    <div class="hire-head">
+      <span class="c-range live">Available now</span>
+      <h3 id="hire-title">How would you like to reach me?</h3>
+      <p>Pick one and it opens straight away.</p>
+    </div>
+    <div class="hire-grid">
+      <a class="h-opt" href="mailto:mizanurasif02@gmail.com?subject=Hiring%20enquiry" style="--o:#c2a4ff"><span class="h-ic"><svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm9 7.2L4.4 7H4v.6l8 5.6 8-5.6V7h-.4L12 12.2Z"/></svg></span><b>Email</b><small>mizanurasif02@gmail.com</small></a>
+      <a class="h-opt" href="https://wa.me/8801618070639?text=Hi%20Mizanur%2C%20I%20saw%20your%20portfolio" target="_blank" rel="noopener" style="--o:#25d366"><span class="h-ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 .9c.3.2.5.2.6.4.1.1.1.7-.1 1.3Z"/></svg></span><b>WhatsApp</b><small>+8801618070639</small></a>
+      <a class="h-opt" href="tel:+8801618070639" style="--o:#5b8cff"><span class="h-ic"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"/></svg></span><b>Call</b><small>+8801618070639</small></a>
+      <a class="h-opt" href="https://www.linkedin.com/in/mizanur-rahman-asif" target="_blank" rel="noopener" style="--o:#3b9bff"><span class="h-ic"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg></span><b>LinkedIn</b><small>Message me</small></a>
+      <a class="h-opt" href="https://github.com/mizanurasif" target="_blank" rel="noopener" style="--o:#e9e6f0"><span class="h-ic"><svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.6.2 2.9.1 3.2.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg></span><b>GitHub</b><small>See my code</small></a>
+      <a class="h-opt" href="resume.pdf" download="Mizanur_Rahman_Resume.pdf" style="--o:#ffc93c"><span class="h-ic"><svg viewBox="0 0 24 24"><path d="M6 2h8l6 6v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Zm7 1.5V9h5.5L13 3.5ZM12 11v5.6l-2.3-2.3-1.4 1.4L12 19.4l3.7-3.7-1.4-1.4L12 16.6V11h0Z"/></svg></span><b>Resume</b><small>Download PDF</small></a>
+    </div>
+    <p class="hire-foot">📍 Dhaka, Bangladesh · <span id="hTime"></span></p>
+  </div>
+</div>
+<script>
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const ICONS = {"JavaScript":{"p":"M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z","h":"F7DF1E"},"TypeScript":{"p":"M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z","h":"3178C6"},"Python":{"p":"M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z","h":"3776AB"},"Rust":{"p":"M23.8346 11.7033l-1.0073-.6236a13.7268 13.7268 0 00-.0283-.2936l.8656-.8069a.3483.3483 0 00-.1154-.578l-1.1066-.414a8.4958 8.4958 0 00-.087-.2856l.6904-.9587a.3462.3462 0 00-.2257-.5446l-1.1663-.1894a9.3574 9.3574 0 00-.1407-.2622l.49-1.0761a.3437.3437 0 00-.0274-.3361.3486.3486 0 00-.3006-.154l-1.1845.0416a6.7444 6.7444 0 00-.1873-.2268l.2723-1.153a.3472.3472 0 00-.417-.4172l-1.1532.2724a14.0183 14.0183 0 00-.2278-.1873l.0415-1.1845a.3442.3442 0 00-.49-.328l-1.076.491c-.0872-.0476-.1742-.0952-.2623-.1407l-.1903-1.1673A.3483.3483 0 0016.256.955l-.9597.6905a8.4867 8.4867 0 00-.2855-.086l-.414-1.1066a.3483.3483 0 00-.5781-.1154l-.8069.8666a9.2936 9.2936 0 00-.2936-.0284L12.2946.1683a.3462.3462 0 00-.5892 0l-.6236 1.0073a13.7383 13.7383 0 00-.2936.0284L9.9803.3374a.3462.3462 0 00-.578.1154l-.4141 1.1065c-.0962.0274-.1903.0567-.2855.086L7.744.955a.3483.3483 0 00-.5447.2258L7.009 2.348a9.3574 9.3574 0 00-.2622.1407l-1.0762-.491a.3462.3462 0 00-.49.328l.0416 1.1845a7.9826 7.9826 0 00-.2278.1873L3.8413 3.425a.3472.3472 0 00-.4171.4171l.2713 1.1531c-.0628.075-.1255.1509-.1863.2268l-1.1845-.0415a.3462.3462 0 00-.328.49l.491 1.0761a9.167 9.167 0 00-.1407.2622l-1.1662.1894a.3483.3483 0 00-.2258.5446l.6904.9587a13.303 13.303 0 00-.087.2855l-1.1065.414a.3483.3483 0 00-.1155.5781l.8656.807a9.2936 9.2936 0 00-.0283.2935l-1.0073.6236a.3442.3442 0 000 .5892l1.0073.6236c.008.0982.0182.1964.0283.2936l-.8656.8079a.3462.3462 0 00.1155.578l1.1065.4141c.0273.0962.0567.1914.087.2855l-.6904.9587a.3452.3452 0 00.2268.5447l1.1662.1893c.0456.088.0922.1751.1408.2622l-.491 1.0762a.3462.3462 0 00.328.49l1.1834-.0415c.0618.0769.1235.1528.1873.2277l-.2713 1.1541a.3462.3462 0 00.4171.4161l1.153-.2713c.075.0638.151.1255.2279.1863l-.0415 1.1845a.3442.3442 0 00.49.327l1.0761-.49c.087.0486.1741.0951.2622.1407l.1903 1.1662a.3483.3483 0 00.5447.2268l.9587-.6904a9.299 9.299 0 00.2855.087l.414 1.1066a.3452.3452 0 00.5781.1154l.8079-.8656c.0972.0111.1954.0203.2936.0294l.6236 1.0073a.3472.3472 0 00.5892 0l.6236-1.0073c.0982-.0091.1964-.0183.2936-.0294l.8069.8656a.3483.3483 0 00.578-.1154l.4141-1.1066a8.4626 8.4626 0 00.2855-.087l.9587.6904a.3452.3452 0 00.5447-.2268l.1903-1.1662c.088-.0456.1751-.0931.2622-.1407l1.0762.49a.3472.3472 0 00.49-.327l-.0415-1.1845a6.7267 6.7267 0 00.2267-.1863l1.1531.2713a.3472.3472 0 00.4171-.416l-.2713-1.1542c.0628-.0749.1255-.1508.1863-.2278l1.1845.0415a.3442.3442 0 00.328-.49l-.49-1.076c.0475-.0872.0951-.1742.1407-.2623l1.1662-.1893a.3483.3483 0 00.2258-.5447l-.6904-.9587.087-.2855 1.1066-.414a.3462.3462 0 00.1154-.5781l-.8656-.8079c.0101-.0972.0202-.1954.0283-.2936l1.0073-.6236a.3442.3442 0 000-.5892zm-6.7413 8.3551a.7138.7138 0 01.2986-1.396.714.714 0 11-.2997 1.396zm-.3422-2.3142a.649.649 0 00-.7715.5l-.3573 1.6685c-1.1035.501-2.3285.7795-3.6193.7795a8.7368 8.7368 0 01-3.6951-.814l-.3574-1.6684a.648.648 0 00-.7714-.499l-1.473.3158a8.7216 8.7216 0 01-.7613-.898h7.1676c.081 0 .1356-.0141.1356-.088v-2.536c0-.074-.0536-.0881-.1356-.0881h-2.0966v-1.6077h2.2677c.2065 0 1.1065.0587 1.394 1.2088.0901.3533.2875 1.5044.4232 1.8729.1346.413.6833 1.2381 1.2685 1.2381h3.5716a.7492.7492 0 00.1296-.0131 8.7874 8.7874 0 01-.8119.9526zM6.8369 20.024a.714.714 0 11-.2997-1.396.714.714 0 01.2997 1.396zM4.1177 8.9972a.7137.7137 0 11-1.304.5791.7137.7137 0 011.304-.579zm-.8352 1.9813l1.5347-.6824a.65.65 0 00.33-.8585l-.3158-.7147h1.2432v5.6025H3.5669a8.7753 8.7753 0 01-.2834-3.348zm6.7343-.5437V8.7836h2.9601c.153 0 1.0792.1772 1.0792.8697 0 .575-.7107.7815-1.2948.7815zm10.7574 1.4862c0 .2187-.008.4363-.0243.651h-.9c-.09 0-.1265.0586-.1265.1477v.413c0 .973-.5487 1.1846-1.0296 1.2382-.4576.0517-.9648-.1913-1.0275-.4717-.2704-1.5186-.7198-1.8436-1.4305-2.4034.8817-.5599 1.799-1.386 1.799-2.4915 0-1.1936-.819-1.9458-1.3769-2.3153-.7825-.5163-1.6491-.6195-1.883-.6195H5.4682a8.7651 8.7651 0 014.907-2.7699l1.0974 1.151a.648.648 0 00.9182.0213l1.227-1.1743a8.7753 8.7753 0 016.0044 4.2762l-.8403 1.8982a.652.652 0 00.33.8585l1.6178.7188c.0283.2875.0425.577.0425.8717zm-9.3006-9.5993a.7128.7128 0 11.984 1.0316.7137.7137 0 01-.984-1.0316zm8.3389 6.71a.7107.7107 0 01.9395-.3625.7137.7137 0 11-.9405.3635z","h":"000000"},"Java":{"p":"M11.915 0 11.7.215C9.515 2.4 7.47 6.39 6.046 10.483c-1.064 1.024-3.633 2.81-3.711 3.551-.093.87 1.746 2.611 1.55 3.235-.198.625-1.304 1.408-1.014 1.939.1.188.823.011 1.277-.491a13.389 13.389 0 0 0-.017 2.14c.076.906.27 1.668.643 2.232.372.563.956.911 1.667.911.397 0 .727-.114 1.024-.264.298-.149.571-.33.91-.5.68-.34 1.634-.666 3.53-.604 1.903.062 2.872.39 3.559.704.687.314 1.15.664 1.925.664.767 0 1.395-.336 1.807-.9.412-.563.631-1.33.72-2.24.06-.623.055-1.32 0-2.066.454.45 1.117.604 1.213.424.29-.53-.816-1.314-1.013-1.937-.198-.624 1.642-2.366 1.549-3.236-.08-.748-2.707-2.568-3.748-3.586C16.428 6.374 14.308 2.394 12.13.215zm.175 6.038a2.95 2.95 0 0 1 2.943 2.942 2.95 2.95 0 0 1-2.943 2.943A2.95 2.95 0 0 1 9.148 8.98a2.95 2.95 0 0 1 2.942-2.942zM8.685 7.983a3.515 3.515 0 0 0-.145.997c0 1.951 1.6 3.55 3.55 3.55 1.95 0 3.55-1.598 3.55-3.55 0-.329-.046-.648-.132-.951.334.095.64.208.915.336a42.699 42.699 0 0 1 2.042 5.829c.678 2.545 1.01 4.92.846 6.607-.082.844-.29 1.51-.606 1.94-.315.431-.713.651-1.315.651-.593 0-.932-.27-1.673-.61-.741-.338-1.825-.694-3.792-.758-1.974-.064-3.073.293-3.821.669-.375.188-.659.373-.911.5s-.466.2-.752.2c-.53 0-.876-.209-1.16-.64-.285-.43-.474-1.101-.545-1.948-.141-1.693.176-4.069.823-6.614a43.155 43.155 0 0 1 1.934-5.783c.348-.167.749-.31 1.192-.425zm-3.382 4.362a.216.216 0 0 1 .13.031c-.166.56-.323 1.116-.463 1.665a33.849 33.849 0 0 0-.547 2.555 3.9 3.9 0 0 0-.2-.39c-.58-1.012-.914-1.642-1.16-2.08.315-.24 1.679-1.755 2.24-1.781zm13.394.01c.562.027 1.926 1.543 2.24 1.783-.246.438-.58 1.068-1.16 2.08a4.428 4.428 0 0 0-.163.309 32.354 32.354 0 0 0-.562-2.49 40.579 40.579 0 0 0-.482-1.652.216.216 0 0 1 .127-.03z","h":"000000"},"C++":{"p":"M22.394 6c-.167-.29-.398-.543-.652-.69L12.926.22c-.509-.294-1.34-.294-1.848 0L2.26 5.31c-.508.293-.923 1.013-.923 1.6v10.18c0 .294.104.62.271.91.167.29.398.543.652.69l8.816 5.09c.508.293 1.34.293 1.848 0l8.816-5.09c.254-.147.485-.4.652-.69.167-.29.27-.616.27-.91V6.91c.003-.294-.1-.62-.268-.91zM12 19.11c-3.92 0-7.109-3.19-7.109-7.11 0-3.92 3.19-7.11 7.11-7.11a7.133 7.133 0 016.156 3.553l-3.076 1.78a3.567 3.567 0 00-3.08-1.78A3.56 3.56 0 008.444 12 3.56 3.56 0 0012 15.555a3.57 3.57 0 003.08-1.778l3.078 1.78A7.135 7.135 0 0112 19.11zm7.11-6.715h-.79v.79h-.79v-.79h-.79v-.79h.79v-.79h.79v.79h.79zm2.962 0h-.79v.79h-.79v-.79h-.79v-.79h.79v-.79h.79v.79h.79z","h":"00599C"},"Kotlin":{"p":"M24 24H0V0h24L12 12Z","h":"7F52FF"},"React":{"p":"M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z","h":"61DAFB"},"Next.js":{"p":"M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z","h":"000000"},"Tauri":{"p":"M13.912 0a8.72 8.72 0 0 0-8.308 6.139c1.05-.515 2.18-.845 3.342-.976 2.415-3.363 7.4-3.412 9.88-.097 2.48 3.315 1.025 8.084-2.883 9.45a6.131 6.131 0 0 1-.3 2.762 8.72 8.72 0 0 0 3.01-1.225A8.72 8.72 0 0 0 13.913 0zm.082 6.451a2.284 2.284 0 1 0-.15 4.566 2.284 2.284 0 0 0 .15-4.566zm-5.629.27a8.72 8.72 0 0 0-3.031 1.235 8.72 8.72 0 1 0 13.06 9.9131 10.173 10.174 0 0 1-3.343.965 6.125 6.125 0 1 1-7.028-9.343 6.114 6.115 0 0 1 .342-2.772zm1.713 6.27a2.284 2.284 0 0 0-2.284 2.283 2.284 2.284 0 0 0 2.284 2.284 2.284 2.284 0 0 0 2.284-2.284 2.284 2.284 0 0 0-2.284-2.284z","h":"24C8D8"},"three.js":{"p":"M.38 0a.268.268 0 0 0-.256.332l2.894 11.716a.268.268 0 0 0 .01.04l2.89 11.708a.268.268 0 0 0 .447.128L23.802 7.15a.268.268 0 0 0-.112-.45l-5.784-1.667a.268.268 0 0 0-.123-.035L6.38 1.715a.268.268 0 0 0-.144-.04L.456.01A.268.268 0 0 0 .38 0zm.374.654L5.71 2.08 1.99 5.664zM6.61 2.34l4.864 1.4-3.65 3.515zm-.522.12l1.217 4.926-4.877-1.4zm6.28 1.538l4.878 1.404-3.662 3.53zm-.52.13l1.208 4.9-4.853-1.392zm6.3 1.534l4.947 1.424-3.715 3.574zm-.524.12l1.215 4.926-4.876-1.398zm-15.432.696l4.964 1.424-3.726 3.586zM8.047 8.15l4.877 1.4-3.66 3.527zm-.518.137l1.236 5.017-4.963-1.432zm6.274 1.535l4.965 1.425-3.73 3.586zm-.52.127l1.235 5.012-4.958-1.43zm-9.63 2.438l4.873 1.406-3.656 3.523zm5.854 1.687l4.863 1.403-3.648 3.51zm-.54.04l1.214 4.927-4.875-1.4zm-3.896 4.02l5.037 1.442-3.782 3.638z","h":"000000"},"Node.js":{"p":"M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z M19.099,13.993 c0-1.9-1.284-2.406-3.987-2.763c-2.731-0.361-3.009-0.548-3.009-1.187c0-0.528,0.235-1.233,2.258-1.233 c1.807,0,2.473,0.389,2.747,1.607c0.024,0.115,0.129,0.199,0.247,0.199h1.141c0.071,0,0.138-0.031,0.186-0.081 c0.048-0.054,0.074-0.123,0.067-0.196c-0.177-2.098-1.571-3.076-4.388-3.076c-2.508,0-4.004,1.058-4.004,2.833 c0,1.925,1.488,2.457,3.895,2.695c2.88,0.282,3.103,0.703,3.103,1.269c0,0.983-0.789,1.402-2.642,1.402 c-2.327,0-2.839-0.584-3.011-1.742c-0.02-0.124-0.126-0.215-0.253-0.215h-1.137c-0.141,0-0.254,0.112-0.254,0.253 c0,1.482,0.806,3.248,4.655,3.248C17.501,17.007,19.099,15.91,19.099,13.993z","h":"5FA04E"},"Express":{"p":"M12.262 16.666h1.146l6.975-9.325H19.22zm9.778 1.441v.004l-4.334-5.706-.557.74 4.873 6.682H.945V4.173h9.505l5.026 6.7.574-.772-4.374-5.928h.003l-.719-.945H0v17.544h24zM10.917 8.705a3.8 3.8 0 0 0-1.292-1.183q-.796-.45-1.916-.45c-.746 0-1.37.14-1.906.424a3.76 3.76 0 0 0-1.31 1.12 4.9 4.9 0 0 0-.75 1.581 7.17 7.17 0 0 0 0 3.696c.148.567.402 1.101.75 1.573a3.5 3.5 0 0 0 1.31 1.066q.803.39 1.906.389 1.77 0 2.739-.868.966-.867 1.328-2.457h-1.139q-.271 1.084-.977 1.734-.704.651-1.952.65-.812 0-1.392-.342a3.1 3.1 0 0 1-.957-.869 3.5 3.5 0 0 1-.551-1.182 5 5 0 0 1-.17-1.133 9 9 0 0 0-.015-.286 4.5 4.5 0 0 1 .015-.829c.047-.418.147-.83.296-1.223A3.7 3.7 0 0 1 5.54 9.05a2.9 2.9 0 0 1 .922-.742q.541-.28 1.246-.28c.47 0 .869.093 1.23.28q.541.281.922.742.379.461.587 1.057t.225 1.246H5.625l.004.957h6.182a7.3 7.3 0 0 0-.18-1.924 4.9 4.9 0 0 0-.715-1.68z","h":"0A0A0A"},"FastAPI":{"p":"M12 .0387C5.3729.0384.0003 5.3931 0 11.9988c-.001 6.6066 5.372 11.9628 12 11.9625 6.628.0003 12.001-5.3559 12-11.9625-.0003-6.6057-5.3729-11.9604-12-11.96m-.829 5.4153h7.55l-7.5805 5.3284h5.1828L5.279 18.5436q2.9466-6.5444 5.892-13.0896","h":"009688"},".NET":{"p":"M24 8.77h-2.468v7.565h-1.425V8.77h-2.462V7.53H24zm-6.852 7.565h-4.821V7.53h4.63v1.24h-3.205v2.494h2.953v1.234h-2.953v2.604h3.396zm-6.708 0H8.882L4.78 9.863a2.896 2.896 0 0 1-.258-.51h-.036c.032.189.048.592.048 1.21v5.772H3.157V7.53h1.659l3.965 6.32c.167.261.275.442.323.54h.024c-.04-.233-.06-.629-.06-1.185V7.529h1.372zm-8.703-.693a.868.829 0 0 1-.869.829.868.829 0 0 1-.868-.83.868.829 0 0 1 .868-.828.868.829 0 0 1 .869.829Z","h":"512BD4"},"Spring Boot":{"p":"m23.693 10.7058-4.73-8.1844c-.4094-.7106-1.4166-1.2942-2.2402-1.2942H7.2725c-.819 0-1.8308.5836-2.2402 1.2942L.307 10.7058c-.4095.7106-.4095 1.873 0 2.5837l4.7252 8.189c.4094.7107 1.4166 1.2943 2.2402 1.2943h9.455c.819 0 1.826-.5836 2.2402-1.2942l4.7252-8.189c.4095-.7107.4095-1.8732 0-2.5838zM10.9763 5.7547c0-.5365.4377-.9742.9742-.9742s.9742.4377.9742.9742v5.8217c0 .5366-.4377.9742-.9742.9742s-.9742-.4376-.9742-.9742zm.9742 12.4294c-3.6427 0-6.6077-2.965-6.6077-6.6077.0047-2.0896.993-4.0521 2.6685-5.304a.8657.8657 0 0 1 1.2142.1788.8657.8657 0 0 1-.1788 1.2143c-2.1602 1.6048-2.612 4.6592-1.0072 6.8194 1.6049 2.1603 4.6593 2.612 6.8195 1.0072 1.2378-.9177 1.9673-2.372 1.9673-3.9157a4.8972 4.8972 0 0 0-1.9861-3.925c-.386-.2824-.466-.8284-.1836-1.2143.2824-.386.8283-.466 1.2143-.1835 1.6895 1.2471 2.6826 3.2238 2.6873 5.3228 0 3.6474-2.965 6.6077-6.6077 6.6077z","h":"6DB33F"},"PostgreSQL":{"p":"M23.5594 14.7228a.5269.5269 0 0 0-.0563-.1191c-.139-.2632-.4768-.3418-1.0074-.2321-1.6533.3411-2.2935.1312-2.5256-.0191 1.342-2.0482 2.445-4.522 3.0411-6.8297.2714-1.0507.7982-3.5237.1222-4.7316a1.5641 1.5641 0 0 0-.1509-.235C21.6931.9086 19.8007.0248 17.5099.0005c-1.4947-.0158-2.7705.3461-3.1161.4794a9.449 9.449 0 0 0-.5159-.0816 8.044 8.044 0 0 0-1.3114-.1278c-1.1822-.0184-2.2038.2642-3.0498.8406-.8573-.3211-4.7888-1.645-7.2219.0788C.9359 2.1526.3086 3.8733.4302 6.3043c.0409.818.5069 3.334 1.2423 5.7436.4598 1.5065.9387 2.7019 1.4334 3.582.553.9942 1.1259 1.5933 1.7143 1.7895.4474.1491 1.1327.1441 1.8581-.7279.8012-.9635 1.5903-1.8258 1.9446-2.2069.4351.2355.9064.3625 1.39.3772a.0569.0569 0 0 0 .0004.0041 11.0312 11.0312 0 0 0-.2472.3054c-.3389.4302-.4094.5197-1.5002.7443-.3102.064-1.1344.2339-1.1464.8115-.0025.1224.0329.2309.0919.3268.2269.4231.9216.6097 1.015.6331 1.3345.3335 2.5044.092 3.3714-.6787-.017 2.231.0775 4.4174.3454 5.0874.2212.5529.7618 1.9045 2.4692 1.9043.2505 0 .5263-.0291.8296-.0941 1.7819-.3821 2.5557-1.1696 2.855-2.9059.1503-.8707.4016-2.8753.5388-4.1012.0169-.0703.0357-.1207.057-.1362.0007-.0005.0697-.0471.4272.0307a.3673.3673 0 0 0 .0443.0068l.2539.0223.0149.001c.8468.0384 1.9114-.1426 2.5312-.4308.6438-.2988 1.8057-1.0323 1.5951-1.6698zM2.371 11.8765c-.7435-2.4358-1.1779-4.8851-1.2123-5.5719-.1086-2.1714.4171-3.6829 1.5623-4.4927 1.8367-1.2986 4.8398-.5408 6.108-.13-.0032.0032-.0066.0061-.0098.0094-2.0238 2.044-1.9758 5.536-1.9708 5.7495-.0002.0823.0066.1989.0162.3593.0348.5873.0996 1.6804-.0735 2.9184-.1609 1.1504.1937 2.2764.9728 3.0892.0806.0841.1648.1631.2518.2374-.3468.3714-1.1004 1.1926-1.9025 2.1576-.5677.6825-.9597.5517-1.0886.5087-.3919-.1307-.813-.5871-1.2381-1.3223-.4796-.839-.9635-2.0317-1.4155-3.5126zm6.0072 5.0871c-.1711-.0428-.3271-.1132-.4322-.1772.0889-.0394.2374-.0902.4833-.1409 1.2833-.2641 1.4815-.4506 1.9143-1.0002.0992-.126.2116-.2687.3673-.4426a.3549.3549 0 0 0 .0737-.1298c.1708-.1513.2724-.1099.4369-.0417.156.0646.3078.26.3695.4752.0291.1016.0619.2945-.0452.4444-.9043 1.2658-2.2216 1.2494-3.1676 1.0128zm2.094-3.988-.0525.141c-.133.3566-.2567.6881-.3334 1.003-.6674-.0021-1.3168-.2872-1.8105-.8024-.6279-.6551-.9131-1.5664-.7825-2.5004.1828-1.3079.1153-2.4468.079-3.0586-.005-.0857-.0095-.1607-.0122-.2199.2957-.2621 1.6659-.9962 2.6429-.7724.4459.1022.7176.4057.8305.928.5846 2.7038.0774 3.8307-.3302 4.7363-.084.1866-.1633.3629-.2311.5454zm7.3637 4.5725c-.0169.1768-.0358.376-.0618.5959l-.146.4383a.3547.3547 0 0 0-.0182.1077c-.0059.4747-.054.6489-.115.8693-.0634.2292-.1353.4891-.1794 1.0575-.11 1.4143-.8782 2.2267-2.4172 2.5565-1.5155.3251-1.7843-.4968-2.0212-1.2217a6.5824 6.5824 0 0 0-.0769-.2266c-.2154-.5858-.1911-1.4119-.1574-2.5551.0165-.5612-.0249-1.9013-.3302-2.6462.0044-.2932.0106-.5909.019-.8918a.3529.3529 0 0 0-.0153-.1126 1.4927 1.4927 0 0 0-.0439-.208c-.1226-.4283-.4213-.7866-.7797-.9351-.1424-.059-.4038-.1672-.7178-.0869.067-.276.1831-.5875.309-.9249l.0529-.142c.0595-.16.134-.3257.213-.5012.4265-.9476 1.0106-2.2453.3766-5.1772-.2374-1.0981-1.0304-1.6343-2.2324-1.5098-.7207.0746-1.3799.3654-1.7088.5321a5.6716 5.6716 0 0 0-.1958.1041c.0918-1.1064.4386-3.1741 1.7357-4.4823a4.0306 4.0306 0 0 1 .3033-.276.3532.3532 0 0 0 .1447-.0644c.7524-.5706 1.6945-.8506 2.802-.8325.4091.0067.8017.0339 1.1742.081 1.939.3544 3.2439 1.4468 4.0359 2.3827.8143.9623 1.2552 1.9315 1.4312 2.4543-1.3232-.1346-2.2234.1268-2.6797.779-.9926 1.4189.543 4.1729 1.2811 5.4964.1353.2426.2522.4522.2889.5413.2403.5825.5515.9713.7787 1.2552.0696.087.1372.1714.1885.245-.4008.1155-1.1208.3825-1.0552 1.717-.0123.1563-.0423.4469-.0834.8148-.0461.2077-.0702.4603-.0994.7662zm.8905-1.6211c-.0405-.8316.2691-.9185.5967-1.0105a2.8566 2.8566 0 0 0 .135-.0406 1.202 1.202 0 0 0 .1342.103c.5703.3765 1.5823.4213 3.0068.1344-.2016.1769-.5189.3994-.9533.6011-.4098.1903-1.0957.333-1.7473.3636-.7197.0336-1.0859-.0807-1.1721-.151zm.5695-9.2712c-.0059.3508-.0542.6692-.1054 1.0017-.055.3576-.112.7274-.1264 1.1762-.0142.4368.0404.8909.0932 1.3301.1066.887.216 1.8003-.2075 2.7014a3.5272 3.5272 0 0 1-.1876-.3856c-.0527-.1276-.1669-.3326-.3251-.6162-.6156-1.1041-2.0574-3.6896-1.3193-4.7446.3795-.5427 1.3408-.5661 2.1781-.463zm.2284 7.0137a12.3762 12.3762 0 0 0-.0853-.1074l-.0355-.0444c.7262-1.1995.5842-2.3862.4578-3.4385-.0519-.4318-.1009-.8396-.0885-1.2226.0129-.4061.0666-.7543.1185-1.0911.0639-.415.1288-.8443.1109-1.3505.0134-.0531.0188-.1158.0118-.1902-.0457-.4855-.5999-1.938-1.7294-3.253-.6076-.7073-1.4896-1.4972-2.6889-2.0395.5251-.1066 1.2328-.2035 2.0244-.1859 2.0515.0456 3.6746.8135 4.8242 2.2824a.908.908 0 0 1 .0667.1002c.7231 1.3556-.2762 6.2751-2.9867 10.5405zm-8.8166-6.1162c-.025.1794-.3089.4225-.6211.4225a.5821.5821 0 0 1-.0809-.0056c-.1873-.026-.3765-.144-.5059-.3156-.0458-.0605-.1203-.178-.1055-.2844.0055-.0401.0261-.0985.0925-.1488.1182-.0894.3518-.1226.6096-.0867.3163.0441.6426.1938.6113.4186zm7.9305-.4114c.0111.0792-.049.201-.1531.3102-.0683.0717-.212.1961-.4079.2232a.5456.5456 0 0 1-.075.0052c-.2935 0-.5414-.2344-.5607-.3717-.024-.1765.2641-.3106.5611-.352.297-.0414.6111.0088.6356.1851z","h":"4169E1"},"MySQL":{"p":"M16.405 5.501c-.115 0-.193.014-.274.033v.013h.014c.054.104.146.18.214.273.054.107.1.214.154.32l.014-.015c.094-.066.14-.172.14-.333-.04-.047-.046-.094-.08-.14-.04-.067-.126-.1-.18-.153zM5.77 18.695h-.927a50.854 50.854 0 00-.27-4.41h-.008l-1.41 4.41H2.45l-1.4-4.41h-.01a72.892 72.892 0 00-.195 4.41H0c.055-1.966.192-3.81.41-5.53h1.15l1.335 4.064h.008l1.347-4.064h1.095c.242 2.015.384 3.86.428 5.53zm4.017-4.08c-.378 2.045-.876 3.533-1.492 4.46-.482.716-1.01 1.073-1.583 1.073-.153 0-.34-.046-.566-.138v-.494c.11.017.24.026.386.026.268 0 .483-.075.647-.222.197-.18.295-.382.295-.605 0-.155-.077-.47-.23-.944L6.23 14.615h.91l.727 2.36c.164.536.233.91.205 1.123.4-1.064.678-2.227.835-3.483zm12.325 4.08h-2.63v-5.53h.885v4.85h1.745zm-3.32.135l-1.016-.5c.09-.076.177-.158.255-.25.433-.506.648-1.258.648-2.253 0-1.83-.718-2.746-2.155-2.746-.704 0-1.254.232-1.65.697-.43.508-.646 1.256-.646 2.245 0 .972.19 1.686.574 2.14.35.41.877.615 1.583.615.264 0 .506-.033.725-.098l1.325.772.36-.622zM15.5 17.588c-.225-.36-.337-.94-.337-1.736 0-1.393.424-2.09 1.27-2.09.443 0 .77.167.977.5.224.362.336.936.336 1.723 0 1.404-.424 2.108-1.27 2.108-.445 0-.77-.167-.978-.5zm-1.658-.425c0 .47-.172.856-.516 1.156-.344.3-.803.45-1.384.45-.543 0-1.064-.172-1.573-.515l.237-.476c.438.22.833.328 1.19.328.332 0 .593-.073.783-.22a.754.754 0 00.3-.615c0-.33-.23-.61-.648-.845-.388-.213-1.163-.657-1.163-.657-.422-.307-.632-.636-.632-1.177 0-.45.157-.81.47-1.085.315-.278.72-.415 1.22-.415.512 0 .98.136 1.4.41l-.213.476a2.726 2.726 0 00-1.064-.23c-.283 0-.502.068-.654.206a.685.685 0 00-.248.524c0 .328.234.61.666.85.393.215 1.187.67 1.187.67.433.305.648.63.648 1.168zm9.382-5.852c-.535-.014-.95.04-1.297.188-.1.04-.26.04-.274.167.055.053.063.14.11.214.08.134.218.313.346.407.14.11.28.216.427.31.26.16.555.255.81.416.145.094.293.213.44.313.073.05.12.14.214.172v-.02c-.046-.06-.06-.147-.105-.214-.067-.067-.134-.127-.2-.193a3.223 3.223 0 00-.695-.675c-.214-.146-.682-.35-.77-.595l-.013-.014c.146-.013.32-.066.46-.106.227-.06.435-.047.67-.106.106-.027.213-.06.32-.094v-.06c-.12-.12-.21-.283-.334-.395a8.867 8.867 0 00-1.104-.823c-.21-.134-.476-.22-.697-.334-.08-.04-.214-.06-.26-.127-.12-.146-.19-.34-.275-.514a17.69 17.69 0 01-.547-1.163c-.12-.262-.193-.523-.34-.763-.69-1.137-1.437-1.826-2.586-2.5-.247-.14-.543-.2-.856-.274-.167-.008-.334-.02-.5-.027-.11-.047-.216-.174-.31-.235-.38-.24-1.364-.76-1.644-.072-.18.434.267.862.422 1.082.115.153.26.328.34.5.047.116.06.235.107.356.106.294.207.622.347.897.073.14.153.287.247.413.054.073.146.107.167.227-.094.136-.1.334-.154.5-.24.757-.146 1.693.194 2.25.107.166.362.534.703.393.3-.12.234-.5.32-.835.02-.08.007-.133.048-.187v.015c.094.188.188.367.274.555.206.328.566.668.867.895.16.12.287.328.487.402v-.02h-.015c-.043-.058-.1-.086-.154-.133a3.445 3.445 0 01-.35-.4 8.76 8.76 0 01-.747-1.218c-.11-.21-.202-.436-.29-.643-.04-.08-.04-.2-.107-.24-.1.146-.247.273-.32.453-.127.288-.14.642-.188 1.01-.027.007-.014 0-.027.014-.214-.052-.287-.274-.367-.46-.2-.475-.233-1.238-.06-1.785.047-.14.247-.582.167-.716-.042-.127-.174-.2-.247-.303a2.478 2.478 0 01-.24-.427c-.16-.374-.24-.788-.414-1.162-.08-.173-.22-.354-.334-.513-.127-.18-.267-.307-.368-.52-.033-.073-.08-.194-.027-.274.014-.054.042-.075.094-.09.088-.072.335.022.422.062.247.1.455.194.662.334.094.066.195.193.315.226h.14c.214.047.455.014.655.073.355.114.675.28.962.46a5.953 5.953 0 012.085 2.286c.08.154.115.295.188.455.14.33.313.663.455.982.14.315.275.636.476.897.1.14.502.213.682.286.133.06.34.115.46.188.23.14.454.3.67.454.11.076.443.243.463.378z","h":"4479A1"},"SQLite":{"p":"M21.678.521c-1.032-.92-2.28-.55-3.513.544a8.71 8.71 0 0 0-.547.535c-2.109 2.237-4.066 6.38-4.674 9.544.237.48.422 1.093.544 1.561a13.044 13.044 0 0 1 .164.703s-.019-.071-.096-.296l-.05-.146a1.689 1.689 0 0 0-.033-.08c-.138-.32-.518-.995-.686-1.289-.143.423-.27.818-.376 1.176.484.884.778 2.4.778 2.4s-.025-.099-.147-.442c-.107-.303-.644-1.244-.772-1.464-.217.804-.304 1.346-.226 1.478.152.256.296.698.422 1.186.286 1.1.485 2.44.485 2.44l.017.224a22.41 22.41 0 0 0 .056 2.748c.095 1.146.273 2.13.5 2.657l.155-.084c-.334-1.038-.47-2.399-.41-3.967.09-2.398.642-5.29 1.661-8.304 1.723-4.55 4.113-8.201 6.3-9.945-1.993 1.8-4.692 7.63-5.5 9.788-.904 2.416-1.545 4.684-1.931 6.857.666-2.037 2.821-2.912 2.821-2.912s1.057-1.304 2.292-3.166c-.74.169-1.955.458-2.362.629-.6.251-.762.337-.762.337s1.945-1.184 3.613-1.72C21.695 7.9 24.195 2.767 21.678.521m-18.573.543A1.842 1.842 0 0 0 1.27 2.9v16.608a1.84 1.84 0 0 0 1.835 1.834h9.418a22.953 22.953 0 0 1-.052-2.707c-.006-.062-.011-.141-.016-.2a27.01 27.01 0 0 0-.473-2.378c-.121-.47-.275-.898-.369-1.057-.116-.197-.098-.31-.097-.432 0-.12.015-.245.037-.386a9.98 9.98 0 0 1 .234-1.045l.217-.028c-.017-.035-.014-.065-.031-.097l-.041-.381a32.8 32.8 0 0 1 .382-1.194l.2-.019c-.008-.016-.01-.038-.018-.053l-.043-.316c.63-3.28 2.587-7.443 4.8-9.791.066-.069.133-.128.198-.194Z","h":"003B57"},"MongoDB":{"p":"M17.193 9.555c-1.264-5.58-4.252-7.414-4.573-8.115-.28-.394-.53-.954-.735-1.44-.036.495-.055.685-.523 1.184-.723.566-4.438 3.682-4.74 10.02-.282 5.912 4.27 9.435 4.888 9.884l.07.05A73.49 73.49 0 0111.91 24h.481c.114-1.032.284-2.056.51-3.07.417-.296.604-.463.85-.693a11.342 11.342 0 003.639-8.464c.01-.814-.103-1.662-.197-2.218zm-5.336 8.195s0-8.291.275-8.29c.213 0 .49 10.695.49 10.695-.381-.045-.765-1.76-.765-2.405z","h":"47A248"},"Docker":{"p":"M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.185.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.185.186.186m5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.184-.186h-2.12a.186.186 0 00-.186.186v1.887c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.082.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 00-.75.748 11.376 11.376 0 00.692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 003.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288Z","h":"2496ED"},"Kubernetes":{"p":"M10.204 14.35l.007.01-.999 2.413a5.171 5.171 0 0 1-2.075-2.597l2.578-.437.004.005a.44.44 0 0 1 .484.606zm-.833-2.129a.44.44 0 0 0 .173-.756l.002-.011L7.585 9.7a5.143 5.143 0 0 0-.73 3.255l2.514-.725.002-.009zm1.145-1.98a.44.44 0 0 0 .699-.337l.01-.005.15-2.62a5.144 5.144 0 0 0-3.01 1.442l2.147 1.523.004-.002zm.76 2.75l.723.349.722-.347.18-.78-.5-.623h-.804l-.5.623.179.779zm1.5-3.095a.44.44 0 0 0 .7.336l.008.003 2.134-1.513a5.188 5.188 0 0 0-2.992-1.442l.148 2.615.002.001zm10.876 5.97l-5.773 7.181a1.6 1.6 0 0 1-1.248.594l-9.261.003a1.6 1.6 0 0 1-1.247-.596l-5.776-7.18a1.583 1.583 0 0 1-.307-1.34L2.1 5.573c.108-.47.425-.864.863-1.073L11.305.513a1.606 1.606 0 0 1 1.385 0l8.345 3.985c.438.209.755.604.863 1.073l2.062 8.955c.108.47-.005.963-.308 1.34zm-3.289-2.057c-.042-.01-.103-.026-.145-.034-.174-.033-.315-.025-.479-.038-.35-.037-.638-.067-.895-.148-.105-.04-.18-.165-.216-.216l-.201-.059a6.45 6.45 0 0 0-.105-2.332 6.465 6.465 0 0 0-.936-2.163c.052-.047.15-.133.177-.159.008-.09.001-.183.094-.282.197-.185.444-.338.743-.522.142-.084.273-.137.415-.242.032-.024.076-.062.11-.089.24-.191.295-.52.123-.736-.172-.216-.506-.236-.745-.045-.034.027-.08.062-.111.088-.134.116-.217.23-.33.35-.246.25-.45.458-.673.609-.097.056-.239.037-.303.033l-.19.135a6.545 6.545 0 0 0-4.146-2.003l-.012-.223c-.065-.062-.143-.115-.163-.25-.022-.268.015-.557.057-.905.023-.163.061-.298.068-.475.001-.04-.001-.099-.001-.142 0-.306-.224-.555-.5-.555-.275 0-.499.249-.499.555l.001.014c0 .041-.002.092 0 .128.006.177.044.312.067.475.042.348.078.637.056.906a.545.545 0 0 1-.162.258l-.012.211a6.424 6.424 0 0 0-4.166 2.003 8.373 8.373 0 0 1-.18-.128c-.09.012-.18.04-.297-.029-.223-.15-.427-.358-.673-.608-.113-.12-.195-.234-.329-.349-.03-.026-.077-.062-.111-.088a.594.594 0 0 0-.348-.132.481.481 0 0 0-.398.176c-.172.216-.117.546.123.737l.007.005.104.083c.142.105.272.159.414.242.299.185.546.338.743.522.076.082.09.226.1.288l.16.143a6.462 6.462 0 0 0-1.02 4.506l-.208.06c-.055.072-.133.184-.215.217-.257.081-.546.11-.895.147-.164.014-.305.006-.48.039-.037.007-.09.02-.133.03l-.004.002-.007.002c-.295.071-.484.342-.423.608.061.267.349.429.645.365l.007-.001.01-.003.129-.029c.17-.046.294-.113.448-.172.33-.118.604-.217.87-.256.112-.009.23.069.288.101l.217-.037a6.5 6.5 0 0 0 2.88 3.596l-.09.218c.033.084.069.199.044.282-.097.252-.263.517-.452.813-.091.136-.185.242-.268.399-.02.037-.045.095-.064.134-.128.275-.034.591.213.71.248.12.556-.007.69-.282v-.002c.02-.039.046-.09.062-.127.07-.162.094-.301.144-.458.132-.332.205-.68.387-.897.05-.06.13-.082.215-.105l.113-.205a6.453 6.453 0 0 0 4.609.012l.106.192c.086.028.18.042.256.155.136.232.229.507.342.84.05.156.074.295.145.457.016.037.043.09.062.129.133.276.442.402.69.282.247-.118.341-.435.213-.71-.02-.039-.045-.096-.065-.134-.083-.156-.177-.261-.268-.398-.19-.296-.346-.541-.443-.793-.04-.13.007-.21.038-.294-.018-.022-.059-.144-.083-.202a6.499 6.499 0 0 0 2.88-3.622c.064.01.176.03.213.038.075-.05.144-.114.28-.104.266.039.54.138.87.256.154.06.277.128.448.173.036.01.088.019.13.028l.009.003.007.001c.297.064.584-.098.645-.365.06-.266-.128-.537-.423-.608zM16.4 9.701l-1.95 1.746v.005a.44.44 0 0 0 .173.757l.003.01 2.526.728a5.199 5.199 0 0 0-.108-1.674A5.208 5.208 0 0 0 16.4 9.7zm-4.013 5.325a.437.437 0 0 0-.404-.232.44.44 0 0 0-.372.233h-.002l-1.268 2.292a5.164 5.164 0 0 0 3.326.003l-1.27-2.296h-.01zm1.888-1.293a.44.44 0 0 0-.27.036.44.44 0 0 0-.214.572l-.003.004 1.01 2.438a5.15 5.15 0 0 0 2.081-2.615l-2.6-.44-.004.005z","h":"326CE5"},"Git":{"p":"M13.09 23.549a1.54 1.54 0 0 1-2.18 0L.451 13.089a1.54 1.54 0 0 1 0-2.179l7.191-7.19 2.733 2.733a1.85 1.85 0 0 0 .964 2.326v6.66a1.849 1.849 0 1 0 1.54 0V8.957l2.508 2.508a1.85 1.85 0 1 0 1.09-1.09l-2.634-2.634a1.85 1.85 0 0 0-2.378-2.377L8.73 2.63 10.91.451a1.54 1.54 0 0 1 2.179 0l10.459 10.46a1.54 1.54 0 0 1 0 2.179z","h":"F03C2E"},"Linux":{"p":"M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105a.086.086 0 01-.004-.021l-.004-.024a1.807 1.807 0 01-.15.706.953.953 0 01-.213.335.71.71 0 00-.088-.042c-.104-.045-.198-.064-.284-.133a1.312 1.312 0 00-.22-.066c.05-.06.146-.133.183-.198.053-.128.082-.264.088-.402v-.02a1.21 1.21 0 00-.061-.4c-.045-.134-.101-.2-.183-.333-.084-.066-.167-.132-.267-.132h-.016c-.093 0-.176.03-.262.132a.8.8 0 00-.205.334 1.18 1.18 0 00-.09.4v.019c.002.089.008.179.02.267-.193-.067-.438-.135-.607-.202a1.635 1.635 0 01-.018-.2v-.02a1.772 1.772 0 01.15-.768c.082-.22.232-.406.43-.533a.985.985 0 01.594-.2zm-2.962.059h.036c.142 0 .27.048.399.135.146.129.264.288.344.465.09.199.14.4.153.667v.004c.007.134.006.2-.002.266v.08c-.03.007-.056.018-.083.024-.152.055-.274.135-.393.2.012-.09.013-.18.003-.267v-.015c-.012-.133-.04-.2-.082-.333a.613.613 0 00-.166-.267.248.248 0 00-.183-.064h-.021c-.071.006-.13.04-.186.132a.552.552 0 00-.12.27.944.944 0 00-.023.33v.015c.012.135.037.2.08.334.046.134.098.2.166.268.01.009.02.018.034.024-.07.057-.117.07-.176.136a.304.304 0 01-.131.068 2.62 2.62 0 01-.275-.402 1.772 1.772 0 01-.155-.667 1.759 1.759 0 01.08-.668 1.43 1.43 0 01.283-.535c.128-.133.26-.2.418-.2zm1.37 1.706c.332 0 .733.065 1.216.399.293.2.523.269 1.052.468h.003c.255.136.405.266.478.399v-.131a.571.571 0 01.016.47c-.123.31-.516.643-1.063.842v.002c-.268.135-.501.333-.775.465-.276.135-.588.292-1.012.267a1.139 1.139 0 01-.448-.067 3.566 3.566 0 01-.322-.198c-.195-.135-.363-.332-.612-.465v-.005h-.005c-.4-.246-.616-.512-.686-.71-.07-.268-.005-.47.193-.6.224-.135.38-.271.483-.336.104-.074.143-.102.176-.131h.002v-.003c.169-.202.436-.47.839-.601.139-.036.294-.065.466-.065zm2.8 2.142c.358 1.417 1.196 3.475 1.735 4.473.286.534.855 1.659 1.102 3.024.156-.005.33.018.513.064.646-1.671-.546-3.467-1.089-3.966-.22-.2-.232-.335-.123-.335.59.534 1.365 1.572 1.646 2.757.13.535.16 1.104.021 1.67.067.028.135.06.205.067 1.032.534 1.413.938 1.23 1.537v-.043c-.06-.003-.12 0-.18 0h-.016c.151-.467-.182-.825-1.065-1.224-.915-.4-1.646-.336-1.77.465-.008.043-.013.066-.018.135-.068.023-.139.053-.209.064-.43.268-.662.669-.793 1.187-.13.533-.17 1.156-.205 1.869v.003c-.02.334-.17.838-.319 1.35-1.5 1.072-3.58 1.538-5.348.334a2.645 2.645 0 00-.402-.533 1.45 1.45 0 00-.275-.333c.182 0 .338-.03.465-.067a.615.615 0 00.314-.334c.108-.267 0-.697-.345-1.163-.345-.467-.931-.995-1.788-1.521-.63-.4-.986-.87-1.15-1.396-.165-.534-.143-1.085-.015-1.645.245-1.07.873-2.11 1.274-2.763.107-.065.037.135-.408.974-.396.751-1.14 2.497-.122 3.854a8.123 8.123 0 01.647-2.876c.564-1.278 1.743-3.504 1.836-5.268.048.036.217.135.289.202.218.133.38.333.59.465.21.201.477.335.876.335.039.003.075.006.11.006.412 0 .73-.134.997-.268.29-.134.52-.334.74-.4h.005c.467-.135.835-.402 1.044-.7zm2.185 8.958c.037.6.343 1.245.882 1.377.588.134 1.434-.333 1.791-.765l.211-.01c.315-.007.577.01.847.268l.003.003c.208.199.305.53.391.876.085.4.154.78.409 1.066.486.527.645.906.636 1.14l.003-.007v.018l-.003-.012c-.015.262-.185.396-.498.595-.63.401-1.746.712-2.457 1.57-.618.737-1.37 1.14-2.036 1.191-.664.053-1.237-.2-1.574-.898l-.005-.003c-.21-.4-.12-1.025.056-1.69.176-.668.428-1.344.463-1.897.037-.714.076-1.335.195-1.814.12-.465.308-.797.641-.984l.045-.022zm-10.814.049h.01c.053 0 .105.005.157.014.376.055.706.333 1.023.752l.91 1.664.003.003c.243.533.754 1.064 1.189 1.637.434.598.77 1.131.729 1.57v.006c-.057.744-.48 1.148-1.125 1.294-.645.135-1.52.002-2.395-.464-.968-.536-2.118-.469-2.857-.602-.369-.066-.61-.2-.723-.4-.11-.2-.113-.602.123-1.23v-.004l.002-.003c.117-.334.03-.752-.027-1.118-.055-.401-.083-.71.043-.94.16-.334.396-.4.69-.533.294-.135.64-.202.915-.47h.002v-.002c.256-.268.445-.601.668-.838.19-.201.38-.336.663-.336zm7.159-9.074c-.435.201-.945.535-1.488.535-.542 0-.97-.267-1.28-.466-.154-.134-.28-.268-.373-.335-.164-.134-.144-.333-.074-.333.109.016.129.134.199.2.096.066.215.2.36.333.292.2.68.467 1.167.467.485 0 1.053-.267 1.398-.466.195-.135.445-.334.648-.467.156-.136.149-.267.279-.267.128.016.034.134-.147.332a8.097 8.097 0 01-.69.468zm-1.082-1.583V5.64c-.006-.02.013-.042.029-.05.074-.043.18-.027.26.004.063 0 .16.067.15.135-.006.049-.085.066-.135.066-.055 0-.092-.043-.141-.068-.052-.018-.146-.008-.163-.065zm-.551 0c-.02.058-.113.049-.166.066-.047.025-.086.068-.14.068-.05 0-.13-.02-.136-.068-.01-.066.088-.133.15-.133.08-.031.184-.047.259-.005.019.009.036.03.03.05v.02h.003z","h":"FCC624"},"pytest":{"p":"M2.6152 0v.8867h3.8399V0zm5.0215 0v.8867h3.8418V0zm4.957 0v.8867h3.8418V0zm4.9356 0v.8867h3.8418V0zM2.4473 1.8945a.935.935 0 0 0-.9356.9356c0 .517.4185.9375.9356.9375h19.1054c.5171 0 .9356-.4204.9356-.9375a.935.935 0 0 0-.9356-.9356zm.168 2.8477V24H6.455V4.7422zm5.0214 0V20.543h3.8418V4.7422zm4.957 0V15.291h3.8497V4.7422zm4.9356 0v6.4941h3.8418V4.7422z","h":"0A9EDC"},"JWT":{"p":"M10.2 0v6.456L12 8.928l1.8-2.472V0zm3.6 6.456v3.072l2.904-.96L20.52 3.36l-2.928-2.136zm2.904 2.112l-1.8 2.496 2.928.936 6.144-1.992-1.128-3.432zM17.832 12l-2.928.936 1.8 2.496 6.144 1.992 1.128-3.432zm-1.128 3.432l-2.904-.96v3.072l3.792 5.232 2.928-2.136zM13.8 17.544L12 15.072l-1.8 2.472V24h3.6zm-3.6 0v-3.072l-2.904.96L3.48 20.64l2.928 2.136zm-2.904-2.112l1.8-2.496L6.168 12 .024 13.992l1.128 3.432zM6.168 12l2.928-.936-1.8-2.496-6.144-1.992-1.128 3.432zm1.128-3.432l2.904.96V6.456L6.408 1.224 3.48 3.36Z","h":"000000"},"Android":{"p":"M18.4395 5.5586c-.675 1.1664-1.352 2.3318-2.0274 3.498-.0366-.0155-.0742-.0286-.1113-.043-1.8249-.6957-3.484-.8-4.42-.787-1.8551.0185-3.3544.4643-4.2597.8203-.084-.1494-1.7526-3.021-2.0215-3.4864a1.1451 1.1451 0 0 0-.1406-.1914c-.3312-.364-.9054-.4859-1.379-.203-.475.282-.7136.9361-.3886 1.5019 1.9466 3.3696-.0966-.2158 1.9473 3.3593.0172.031-.4946.2642-1.3926 1.0177C2.8987 12.176.452 14.772 0 18.9902h24c-.119-1.1108-.3686-2.099-.7461-3.0683-.7438-1.9118-1.8435-3.2928-2.7402-4.1836a12.1048 12.1048 0 0 0-2.1309-1.6875c.6594-1.122 1.312-2.2559 1.9649-3.3848.2077-.3615.1886-.7956-.0079-1.1191a1.1001 1.1001 0 0 0-.8515-.5332c-.5225-.0536-.9392.3128-1.0488.5449zm-.0391 8.461c.3944.5926.324 1.3306-.1563 1.6503-.4799.3197-1.188.0985-1.582-.4941-.3944-.5927-.324-1.3307.1563-1.6504.4727-.315 1.1812-.1086 1.582.4941zM7.207 13.5273c.4803.3197.5506 1.0577.1563 1.6504-.394.5926-1.1038.8138-1.584.4941-.48-.3197-.5503-1.0577-.1563-1.6504.4008-.6021 1.1087-.8106 1.584-.4941z","h":"3DDC84"},"NPM":{"p":"M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z","h":"CB3837"},"REST APIs":{"p":"M21.039 0a2.959 2.959 0 00-2.65 4.274l-6.447 6.447a2.96 2.96 0 101.335 1.336l6.447-6.447A2.959 2.959 0 1021.04 0zM10.628 2.745c-.072 0-.143.003-.214.004-.072.002-.143.002-.215.005-.447.018-.893.064-1.335.138l-.03.005-.185.033-.105.02a7.718 7.718 0 00-.289.062l-.032.008a10.69 10.69 0 00-2.55.95l-.155.089c-.063.034-.125.07-.187.105-.046.027-.093.051-.14.079H5.19l-.01.005-.036.02v.002l.111.184 3.15 5.23a4.168 4.168 0 01.38-.202 4.294 4.294 0 011.628-.413c.071-.004.143-.008.214-.008zm.428.01v6.333c.325.034.647.103.96.209l4.66-4.66c-.173-.12-.348-.237-.528-.347l-.026-.015c-.056-.035-.112-.067-.168-.1l-.098-.056-.099-.055a12.735 12.735 0 00-.171-.092l-.027-.014a10.628 10.628 0 00-1.425-.617c-.69-.241-1.403-.41-2.128-.505l-.089-.012-.09-.01a6.56 6.56 0 00-.17-.019l-.049-.004-.204-.017a6.44 6.44 0 00-.255-.015c-.031-.003-.062-.003-.093-.004zM4.782 4.498a9.92 9.92 0 00-1.36 1.062l4.461 4.461.018.018c.049-.04.098-.078.149-.116l-.011-.018zm-1.67 1.36c-.05.05-.098.103-.147.154l-.149.155c-.33.357-.63.73-.902 1.118l-.039.056a10.588 10.588 0 00-.216.326 10.6 10.6 0 00-1.65 5.276l-.006.215-.003.214h6.317c0-.072.007-.143.01-.214.005-.072.006-.144.013-.215.081-.822.399-1.625.952-2.3.045-.055.096-.106.144-.16.048-.052.093-.107.144-.158zm16.255 1.464l-4.663 4.663c.106.312.175.634.21.959h6.332l-.004-.094a11.579 11.579 0 00-.032-.456l-.005-.052a13.044 13.044 0 00-.026-.241v-.009l-.033-.24v-.009a10.618 10.618 0 00-.327-1.493l-.003-.01a15.839 15.839 0 00-.07-.228l-.01-.03a14.111 14.111 0 00-.069-.204l-.02-.055a5.65 5.65 0 00-.153-.405 7.84 7.84 0 00-.093-.227 16.67 16.67 0 00-.063-.144l-.037-.081a13.776 13.776 0 00-.08-.171l-.024-.052-.096-.194-.014-.027a11.2 11.2 0 00-.112-.212l-.004-.008a10.615 10.615 0 00-.604-.98zm-4.43 6.05c0 .071-.006.142-.01.214-.003.072-.005.143-.012.214a4.29 4.29 0 01-.952 2.301c-.045.055-.096.107-.144.16-.048.053-.093.108-.144.159l4.467 4.467c.051-.051.099-.104.148-.155.05-.052.1-.103.148-.155.331-.358.633-.733.905-1.122l.032-.046.098-.144.085-.13.04-.063a10.597 10.597 0 001.647-5.272c.003-.071.004-.143.006-.214.001-.071.004-.143.004-.214zM.01 13.8l.004.093.01.179.005.076.017.206.005.046c.007.076.015.153.024.228l.003.022a9.605 9.605 0 00.033.248c.072.505.182 1.005.327 1.497l.002.006c.022.077.047.154.071.23l.004.014.005.014a15.737 15.737 0 00.153.439l.03.08.059.148a7.702 7.702 0 00.093.228l.062.14.038.084.078.169.027.054a10.677 10.677 0 00.225.441l.025.043 5.408-3.258.02-.012a4.314 4.314 0 01-.395-1.414h-.025zm.505 2.846l-.206.058.002.005zm6.425-1.052l-5.415 3.262c.083.139.17.273.259.406l.008.014.004.005.008.014h.001c.007.012.014.022.022.032l.001.002v.001a10.634 10.634 0 00.298.417l.006.008a9.963 9.963 0 00.29.368l.033.04c.043.052.086.103.13.153l.057.065.112.127.064.069.029.031.083.09.035.035c.049.051.098.103.149.153L7.58 16.42a3.86 3.86 0 01-.285-.321 4.422 4.422 0 01-.356-.505zm6.416 1.111c-.05.04-.1.079-.15.116l.011.018 3.257 5.407c.151-.099.3-.2.446-.307.315-.232.62-.484.914-.756l-4.46-4.46zm-5.457.003l-.015.015-4.46 4.46a8.966 8.966 0 00.195.176c.022.02.043.04.065.058l.152.13a10.622 10.622 0 00.215.174l.023.017.191.148.008.005c.268.2.547.389.834.564l.03.018.164.097.101.057a5.458 5.458 0 00.27.148c.008.004.016.01.025.013.162.085.327.164.493.24l.158-.385 2.243-5.448.009-.02a4.328 4.328 0 01-.701-.467zm4.951.353c-.061.037-.124.07-.187.104a4.318 4.318 0 01-3.271.336c-.069-.02-.135-.047-.203-.071-.067-.024-.136-.044-.202-.072l-2.242 5.444-.088.213-.075.183v.001l.017.007a.137.137 0 00.019.007l.005.003c.052.021.106.04.159.06.067.027.133.053.2.077l.102.04c.702.247 1.43.42 2.168.518l.087.012.09.01.172.019a7.173 7.173 0 00.252.022c.023.001.048.001.071.003l.184.011.112.005a7.06 7.06 0 00.358.007h.05a10.667 10.667 0 001.793-.15l.185-.034.105-.02.109-.023.18-.04.032-.008a10.684 10.684 0 002.55-.95c.052-.028.104-.06.156-.089.063-.034.125-.07.187-.105.043-.024.087-.047.13-.073h.001l.002-.002.002-.001.002-.001.007-.004.042-.025-.11-.183-.11-.184zm3.262 5.414l-.042.025.042-.024zm-.05.029zm-.005.004h-.002z","h":"6BA539"},"ASP.NET Core":{"p":"M24 8.77h-2.468v7.565h-1.425V8.77h-2.462V7.53H24zm-6.852 7.565h-4.821V7.53h4.63v1.24h-3.205v2.494h2.953v1.234h-2.953v2.604h3.396zm-6.708 0H8.882L4.78 9.863a2.896 2.896 0 0 1-.258-.51h-.036c.032.189.048.592.048 1.21v5.772H3.157V7.53h1.659l3.965 6.32c.167.261.275.442.323.54h.024c-.04-.233-.06-.629-.06-1.185V7.529h1.372zm-8.703-.693a.868.829 0 0 1-.869.829.868.829 0 0 1-.868-.83.868.829 0 0 1 .868-.828.868.829 0 0 1 .869.829Z","h":"512BD4"},"C#":{"t":"C#","h":"9b4f96"},"Oracle":{"t":"ORA","h":"f80000"},"AWS":{"t":"aws","h":"ff9900"},"SQL":{"p":"M12 3c-4.4 0-8 1.3-8 3v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6c0-1.7-3.6-3-8-3Zm0 2c3.9 0 6 1.1 6 1s-2.1 1-6 1-6-.9-6-1 2.1-1 6-1Zm6 13c0 .1-2.1 1-6 1s-6-.9-6-1v-2.3c1.5.8 3.6 1.3 6 1.3s4.5-.5 6-1.3V18Zm0-5c0 .1-2.1 1-6 1s-6-.9-6-1v-2.3c1.5.8 3.6 1.3 6 1.3s4.5-.5 6-1.3V13Z","h":"4479a1"},"ISO 27001":{"p":"M12 2 4 5v6c0 5 3.4 9.3 8 11 4.6-1.7 8-6 8-11V5l-8-3Z","s":"27001","h":"5b8cff"},"ISMS":{"p":"M12 2 4 5v6c0 5 3.4 9.3 8 11 4.6-1.7 8-6 8-11V5l-8-3Z","s":"ISMS","h":"3ddc84"},"Risk assessment":{"p":"M12 2 1 21h22L12 2Zm1 15h-2v2h2v-2Zm0-7h-2v5h2v-5Z","h":"ffc93c","e":1},"OAuth 2.0":{"p":"M14.5 3a6.5 6.5 0 0 0-6.2 8.4L2 17.7V22h4.3v-2.2h2.2v-2.2h2.2l1.9-1.9A6.5 6.5 0 1 0 14.5 3Zm1.8 6.2a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z","h":"eb5424","e":1}};
+
+/* loader */
+(() => { const L = document.getElementById("loader"), pct = document.getElementById("pct");
+  if (reduce) { L.classList.add("done"); return; }
+  const t0 = performance.now(); let a = 0;
+  const step = now => { const p = Math.min(100, Math.round((now - t0) / 9)); pct.textContent = p + "%"; a += 5; L.querySelector(".pill").style.setProperty("--a", a + "deg");
+    if (p < 100) requestAnimationFrame(step); else setTimeout(() => L.classList.add("done"), 250); };
+  requestAnimationFrame(step); })();
+
+/* keyboard + robot */
+const KEYS = "ASIFRUSTBYTE0X41MIZANURHEX".slice(0, 24).split("");
+const COLS = ["#ffc93c", "#ff5a5a", "#ff6fb5", "#3ddc84", "#5b8cff"];
+const plate = document.getElementById("plate"), box = document.getElementById("stagebox");
+const keyEls = KEYS.map((ch, i) => { const k = document.createElement("span"); k.className = "key"; k.textContent = ch; k.dataset.k = ch; k.style.setProperty("--c", COLS[(i + (i / 8 | 0)) % COLS.length]); plate.appendChild(k); return k; });
+const hex = c => c.charCodeAt(0).toString(16).toUpperCase().padStart(2, "0");
+function press(k) { k.classList.add("down"); setTimeout(() => k.classList.remove("down"), 140); if (reduce) return;
+  const r = k.getBoundingClientRect(), b = box.getBoundingClientRect(); const s = document.createElement("span"); s.className = "byte"; s.setAttribute("aria-hidden", "true"); s.textContent = "0x" + hex(k.dataset.k);
+  s.style.left = (r.left - b.left + r.width / 2) + "px"; s.style.top = (r.top - b.top - 10) + "px"; s.style.setProperty("--c", getComputedStyle(k).getPropertyValue("--c")); box.appendChild(s); setTimeout(() => s.remove(), 1200); }
+if (!reduce) setInterval(() => { const r = box.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) press(keyEls[(Math.random() * keyEls.length) | 0]); }, 260);
+const bubble = document.getElementById("bubble"); let bt = 0;
+function say(t) { bubble.textContent = t; bubble.style.animation = "none"; void bubble.offsetWidth; bubble.style.animation = ""; clearTimeout(bt); bt = setTimeout(() => bubble.textContent = "hi! i'm byte, asif's robot 👋", 2600); }
+addEventListener("keydown", e => { if (e.target && e.target.id === "kbInput") return; if (e.metaKey || e.ctrlKey || e.altKey || e.key.length !== 1) return; const ch = e.key.toUpperCase(); const hits = keyEls.filter(k => k.dataset.k === ch);
+  (hits.length ? hits : [keyEls[(Math.random() * keyEls.length) | 0]]).forEach(press); say(`you typed "${ch}" → 0x${hex(ch)} ✨`); });
+const pupils = document.getElementById("pupils"), robot = document.getElementById("robot");
+addEventListener("pointermove", e => { const r = robot.getBoundingClientRect(); const cx = r.left + r.width * .5, cy = r.top + r.height * .36;
+  const dx = e.clientX - cx, dy = e.clientY - cy, d = Math.hypot(dx, dy) || 1, m = Math.min(9, d / 30);
+  pupils.setAttribute("transform", `translate(${(dx / d * m).toFixed(1)} ${(dy / d * m * .8).toFixed(1)})`); });
+robot.addEventListener("click", () => say(["beep boop! 🤖", "asif wrote 80% of Device Manager!", "i run on Rust and coffee ☕", "ask asif about the Samsung Ring 💍"][(Math.random() * 4) | 0]));
+
+
+/* phones: tapping the keyboard opens the phone's own keyboard; tapping a key presses it */
+(() => {
+  const input = document.getElementById("kbInput"), kbWrap = document.getElementById("stagebox");
+  if (!input || !kbWrap) return;
+  let lastType = "mouse";
+  const typeChar = ch => { ch = ch.toUpperCase(); const hits = keyEls.filter(k => k.dataset.k === ch);
+    (hits.length ? hits : [keyEls[(Math.random() * keyEls.length) | 0]]).forEach(press); say(`you typed "${ch}" → 0x${hex(ch)} ✨`); };
+  kbWrap.addEventListener("pointerdown", e => {
+    const key = e.target.closest(".key");
+    if (key) { press(key); say(`you typed "${key.dataset.k}" → 0x${hex(key.dataset.k)} ✨`); }
+    lastType = e.pointerType;
+  });
+  // focus on click (end of the tap), so the browser does not take focus back right after
+  kbWrap.addEventListener("click", e => { if (lastType !== "mouse" && !e.target.closest("#robot")) input.focus({ preventScroll: true }); });
+  input.addEventListener("input", () => { const v = input.value; if (v) [...v].forEach(c => c.trim() && typeChar(c)); input.value = ""; });
+  input.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === "Escape") input.blur(); });
+})();
+
+/* Hire Me: opens every way to reach Asif */
+(() => {
+  const m = document.getElementById("hireModal"), btn = document.getElementById("hireBtn");
+  if (!m || !btn) return;
+  const t = document.getElementById("hTime");
+  const tick = () => { t.textContent = "my local time " + new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Dhaka", hour: "2-digit", minute: "2-digit" }); };
+  const open = () => { tick(); m.hidden = false; document.documentElement.style.overflow = "hidden"; requestAnimationFrame(() => m.classList.add("open")); m.querySelector(".pm-x").focus(); };
+  const close = () => { m.classList.remove("open"); document.documentElement.style.overflow = ""; setTimeout(() => { m.hidden = true; }, 250); btn.focus({ preventScroll: true }); };
+  btn.addEventListener("click", open);
+  m.addEventListener("click", e => {
+    if (e.target.closest("[data-hclose]")) return close();
+    const c = e.target.closest("[data-copy]"); if (!c) return;
+    const text = document.getElementById(c.dataset.copy).textContent;
+    const done = () => { c.textContent = "Copied ✓"; setTimeout(() => (c.textContent = "Copy"), 1500); };
+    try { navigator.clipboard.writeText(text).then(done, () => { const r = document.createRange(); r.selectNodeContents(document.getElementById(c.dataset.copy)); getSelection().removeAllRanges(); getSelection().addRange(r); }); } catch { }
+  });
+  addEventListener("keydown", e => { if (e.key === "Escape" && !m.hidden) close(); });
+})();
+/* what I do: cards switch the code on the monitor, which types itself */
+(() => {
+  const SNIP = [
+    ["device_manager/src/main.rs", "#[tauri::command]\nfn list_devices() -> Vec<Device> {\n    scan_subnet(\"192.168.0.0/24\")\n        .filter(|d| d.is_tizen())\n        .collect()\n}"],
+    ["printforge/app/models/page.tsx", "export default async function Models() {\n  const models = await sql`select * from models`;\n  return <Viewer glb={models[0].url} />;\n}"],
+    ["mdr-agent/src/telemetry.rs", "loop {\n    let event = watch(&device).await?;\n    if event.is_suspicious() {\n        alert(event).await?; // ISO 27001 ✓\n    }\n}"],
+    ["ring/plugin/Parser.kt", "fun parse(bytes: ByteArray): Frame {\n    val type = bytes[0].toInt()\n    val len  = bytes.readU16(1)\n    return Frame(type, bytes.slice(3, len))\n}"],
+  ];
+  const KW = /\b(fn|let|if|loop|await|return|export|default|async|function|const|fun|val|select|from)\b/g;
+  const esc = t => t.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+  const paint = line => {
+    let h = esc(line);
+    h = h.replace(/(\/\/.*)$/, '<span class="k-cm">$1</span>');
+    h = h.replace(/(&quot;|")([^"]*)("|&quot;)/g, '<span class="k-st">"$2"</span>').replace(/(`[^`]*`)/g, '<span class="k-st">$1</span>');
+    h = h.replace(/\b(0x[0-9A-Fa-f]+|\d+)\b/g, '<span class="k-nu">$1</span>');
+    h = h.replace(KW, '<span class="k-kw">$1</span>');
+    h = h.replace(/\b([A-Z][A-Za-z]+)\b/g, '<span class="k-ty">$1</span>');
+    h = h.replace(/\b([a-z_]+)(?=\()/g, '<span class="k-fn">$1</span>');
+    return h;
+  };
+  const code = document.getElementById("monCode"), file = document.getElementById("monFile"), kb = document.getElementById("miniKb");
+  kb.innerHTML = "<i></i>".repeat(42); const keys = [...kb.children];
+  let timer = 0, cur = -1;
+  const render = (txt, n) => { const shown = txt.slice(0, n).split("\n"); code.innerHTML = shown.map((l, i) => `<span class="ln">${i + 1}</span>${paint(l)}`).join("\n"); };
+  function show(i) {
+    if (i === cur) return; cur = i; clearInterval(timer);
+    const [name, txt] = SNIP[i]; file.textContent = name;
+    document.querySelectorAll(".bracket").forEach((b, k) => b.classList.toggle("live", k === i));
+    if (reduce) return render(txt, txt.length);
+    let n = 0;
+    timer = setInterval(() => {
+      n += 1 + (Math.random() * 2 | 0); render(txt, n);
+      const k = keys[Math.random() * keys.length | 0]; k.classList.add("hit"); setTimeout(() => k.classList.remove("hit"), 90);
+      if (n >= txt.length) clearInterval(timer);
+    }, 28);
+  }
+  const cards = [...document.querySelectorAll(".bracket")];
+  cards.forEach((b, i) => {
+    b.addEventListener("click", () => { cards.forEach(o => o.setAttribute("aria-expanded", o === b && b.getAttribute("aria-expanded") !== "true" ? "true" : "false")); show(i); });
+    b.addEventListener("mouseenter", () => show(i));
+    b.addEventListener("focus", () => show(i));
+  });
+  // start typing when the section scrolls into view
+  new IntersectionObserver((es, ob) => { if (es[0].isIntersecting) { show(0); ob.disconnect(); } }, { threshold: .3 }).observe(document.querySelector(".rig"));
+})();
+
+const STACK2 = [
+  "JavaScript","TypeScript","Python","Rust","C#","Java","C++","Kotlin","SQL","React","Next.js","Tauri",
+  "three.js","Node.js","Express","FastAPI","ASP.NET Core","Spring Boot","REST APIs","PostgreSQL","MySQL","Oracle",
+  "SQLite","MongoDB","Docker","Kubernetes","AWS","Git","NPM","Linux",
+  "pytest","ISO 27001","ISMS","Risk assessment","OAuth 2.0","JWT"];
+const lightEnough = h => { const n = parseInt(h, 16); return (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255 > 0.18; };
+
+/* ===== Redoyan-style parts, rebuilt for Asif ===== */
+(() => {
+  const fine = matchMedia("(pointer: fine)").matches;
+
+  /* mouse: lilac dot that trails the pointer (eased), hides over buttons, stretches over side icons */
+  if (fine && !reduce) {
+    const c = document.createElement("div"); c.className = "cursor-main"; c.setAttribute("aria-hidden", "true"); document.body.appendChild(c);
+    const target = { x: innerWidth / 2, y: innerHeight / 2 }, pos = { ...target }; let locked = false;
+    addEventListener("mousemove", e => { target.x = e.clientX; target.y = e.clientY; });
+    (function loop() { if (!locked) { pos.x += (target.x - pos.x) / 6; pos.y += (target.y - pos.y) / 6; c.style.transform = `translate(${pos.x}px, ${pos.y}px)`; } requestAnimationFrame(loop); })();
+    const disable = "a, button, .t-item, .key, .robot, input";
+    document.addEventListener("mouseover", e => {
+      const icon = e.target.closest(".side a");
+      if (icon) { const r = icon.getBoundingClientRect(); locked = true; c.classList.add("cursor-icons"); c.style.setProperty("--cursorH", r.height + "px"); c.style.transform = `translate(${r.left}px, ${r.top}px)`; return; }
+      if (e.target.closest(disable)) c.classList.add("cursor-disable");
+    });
+    document.addEventListener("mouseout", e => { if (e.target.closest(".side a, " + disable)) { c.classList.remove("cursor-disable", "cursor-icons"); locked = false; } });
+  }
+
+  /* career: line grows with scroll, dot rides its tip, rows fade in as it reaches them */
+  const info = document.getElementById("cinfo"), line = document.getElementById("cline"), boxes = [...info.querySelectorAll(".c-box")];
+
+  /* my work: pinned section, boxes slide sideways */
+  const PROJ = [
+    ["Device Manager", "Samsung R&D · Desktop", "Tauri, React, TypeScript, Rust, Node.js, Express", "Cross-platform desktop app for Tizen devices", "#5b8cff"],
+    ["Samsung Ring Plugin", "Samsung R&D · Android & iOS", "Android, iOS, byte protocols", "One generic parser for every Ring module", "#ff6fb5"],
+    ["PrintForge", "Personal · AI / 3D", "Next.js, TypeScript, PostgreSQL, three.js, NextAuth", "3D model marketplace with AI image-to-3D", "#ff5a5a"],
+    ["MDR Platform", "Makebell · Security", "Rust, security telemetry, alerting", "A Rust agent streaming security telemetry", "#3ddc84"],
+    ["AI Compliance", "Makebell · Security", "ISO 27001, ISMS, AI", "Maps ISO 27001 controls to evidence", "#ffc93c"],
+  ];
+  const wave = k => { let d = "M0 40"; for (let x = 0; x <= 400; x += 20) d += ` L${x} ${40 - (Math.sin(x / 31 + k) * 14 + Math.cos(x / 13) * 6)}`; return `<svg viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true"><path d="${d} L400 60 L0 60 Z" fill="#ffffff22"/><path d="${d}" fill="none" stroke="#ffffffaa" stroke-width="2"/></svg>`; };
+
+  /* custom cover art for each project, banner style: title, tagline, illustration, feature tags */
+  const COVER = [
+    { t: "Device Manager", s: "Cross-Platform Tizen Device Control", tags: ["Subnet Scan", "Live Logs", "Remote Connect", "Rust Core"], a: "#1f6feb", b: "#0a1f44" },
+    { t: "Ring Plugin", s: "Health Data, One Byte at a Time", tags: ["Byte Protocols", "Generic Parser", "Android", "iOS"], a: "#d6338a", b: "#2a0a24" },
+    { t: "PrintForge", s: "3D Marketplace with AI Image-to-3D", tags: ["glTF Viewer", "AI Generate", "SSE Stream", "50 MB Upload"], a: "#e8590c", b: "#2b0f05" },
+    { t: "MDR Platform", s: "Managed Detection & Response", tags: ["Rust Agent", "Telemetry", "Alerts", "Dashboard"], a: "#12b886", b: "#04241b" },
+    { t: "AI Compliance", s: "ISO 27001 Controls, Mapped by AI", tags: ["Evidence Map", "Gap Finder", "ISMS", "Stage 2 ✓"], a: "#f0b400", b: "#2a2000" },
+  ];
+  const ART = [
+    // device manager: app window listing devices, wired to a TV, a watch and a board
+    a => `<rect x="250" y="150" width="300" height="190" rx="14" fill="#0b1630" stroke="${a}" stroke-width="3"/>
+      <rect x="250" y="150" width="300" height="30" rx="14" fill="${a}" opacity=".35"/><circle cx="270" cy="165" r="5" fill="#ff5f57"/><circle cx="286" cy="165" r="5" fill="#febc2e"/><circle cx="302" cy="165" r="5" fill="#28c840"/>
+      ${[0, 1, 2, 3].map(k => `<rect x="268" y="${196 + k * 34}" width="264" height="24" rx="6" fill="#ffffff10"/><circle cx="284" cy="${208 + k * 34}" r="5" fill="${k === 2 ? "#6b7280" : "#3ddc84"}"/><rect x="298" y="${203 + k * 34}" width="${120 - k * 14}" height="10" rx="5" fill="#ffffff55"/>`).join("")}
+      <path d="M550 200 C610 200 610 150 660 150 M550 245 C610 245 620 250 660 250 M550 290 C610 290 610 340 660 340" stroke="${a}" stroke-width="3" fill="none" stroke-dasharray="6 6"/>
+      <rect x="660" y="125" width="70" height="46" rx="6" fill="#0b1630" stroke="#fff" stroke-width="2.5"/><rect x="686" y="171" width="18" height="8" fill="#fff"/>
+      <rect x="672" y="228" width="44" height="44" rx="12" fill="#0b1630" stroke="#fff" stroke-width="2.5"/><rect x="684" y="218" width="20" height="10" rx="3" fill="#fff"/><rect x="684" y="272" width="20" height="10" rx="3" fill="#fff"/>
+      <rect x="660" y="318" width="72" height="44" rx="5" fill="#0d6b3c" stroke="#fff" stroke-width="2.5"/><rect x="684" y="328" width="24" height="24" fill="#0b1630"/>
+      <path d="M90 300 h120 M150 240 v120" stroke="#ffffff22" stroke-width="2"/><circle cx="150" cy="300" r="48" fill="none" stroke="${a}" stroke-width="3" opacity=".8"/><circle cx="150" cy="300" r="28" fill="none" stroke="${a}" stroke-width="2" opacity=".5"/><circle cx="150" cy="300" r="6" fill="${a}"/>`,
+    // ring: a smart ring with signal waves and a stream of bytes
+    a => `<ellipse cx="300" cy="260" rx="120" ry="78" fill="none" stroke="#e9e6f0" stroke-width="26"/><ellipse cx="300" cy="260" rx="120" ry="78" fill="none" stroke="#8a8f99" stroke-width="26" stroke-dasharray="190 600" stroke-dashoffset="-40"/>
+      <ellipse cx="300" cy="260" rx="100" ry="60" fill="none" stroke="#ffffff30" stroke-width="2"/><rect x="398" y="268" width="22" height="14" rx="4" fill="${a}"/>
+      ${[1, 2, 3].map(k => `<path d="M${440 + k * 26} ${230 - k * 12} q${18 + k * 4} ${45 + k * 12} 0 ${90 + k * 24}" stroke="${a}" stroke-width="4" fill="none" opacity="${1 - k * .22}"/>`).join("")}
+      <path d="M560 270 h30 l12 -40 l16 80 l14 -60 l10 20 h40" stroke="#fff" stroke-width="4" fill="none" stroke-linejoin="round"/>
+      ${["0x5A", "0x01", "0x48", "0x20", "0x9F"].map((h, k) => `<text x="${560 + k * 46}" y="${360}" font-family="monospace" font-size="17" font-weight="700" fill="${k % 2 ? "#fff" : a}">${h}</text>`).join("")}`,
+    // printforge: a photo turning into a 3D model
+    a => `<rect x="150" y="190" width="150" height="120" rx="10" fill="#1b0d06" stroke="#fff" stroke-width="3"/><circle cx="190" cy="225" r="12" fill="${a}"/><path d="M160 300 l50 -50 l30 30 l20 -20 l30 40 z" fill="#fff" opacity=".85"/>
+      <path d="M320 250 h80" stroke="${a}" stroke-width="5" marker-end="url(#ah2)"/><text x="335" y="238" font-family="monospace" font-size="14" font-weight="700" fill="${a}">AI</text>
+      <g transform="translate(540 255)"><path d="M0 -105 L95 -50 L95 60 L0 115 L-95 60 L-95 -50 Z" fill="#2b0f05" stroke="${a}" stroke-width="3"/><path d="M0 -105 L0 5 L95 60 M0 5 L-95 60" stroke="${a}" stroke-width="3" fill="none"/>
+      <path d="M0 -105 L95 -50 L0 5 L-95 -50 Z" fill="${a}" opacity=".35"/><path d="M-47 -77 L47 -22 M47 -77 L-47 -22 M-95 5 L0 60 L95 5" stroke="#ffffff40" stroke-width="2" fill="none"/></g>`,
+    // mdr: a shield with a radar sweep and watched laptops
+    a => `<path d="M400 120 L520 165 V260 C520 330 465 375 400 395 C335 375 280 330 280 260 V165 Z" fill="#06291f" stroke="${a}" stroke-width="4"/>
+      <circle cx="400" cy="265" r="80" fill="none" stroke="${a}" stroke-width="2" opacity=".5"/><circle cx="400" cy="265" r="50" fill="none" stroke="${a}" stroke-width="2" opacity=".5"/><path d="M400 265 L470 225 A80 80 0 0 1 480 265 Z" fill="${a}" opacity=".55"/>
+      <circle cx="440" cy="240" r="6" fill="#ff5a5a"/><circle cx="370" cy="290" r="5" fill="#fff"/>
+      ${[[150, 190], [150, 320], [650, 190], [650, 320]].map(([x, y]) => `<rect x="${x - 34}" y="${y - 22}" width="68" height="42" rx="5" fill="#04241b" stroke="#fff" stroke-width="2.5"/><rect x="${x - 44}" y="${y + 20}" width="88" height="7" rx="3" fill="#fff"/><path d="M${x + (x < 400 ? 40 : -40)} ${y} L${x < 400 ? 300 : 500} 265" stroke="${a}" stroke-width="2" stroke-dasharray="5 6"/>`).join("")}`,
+    // compliance: a checklist with an ISO seal
+    a => `<rect x="270" y="130" width="220" height="270" rx="14" fill="#1f1a03" stroke="#fff" stroke-width="3"/><rect x="335" y="115" width="90" height="30" rx="8" fill="${a}"/>
+      ${[0, 1, 2, 3].map(k => `<rect x="296" y="${175 + k * 52}" width="28" height="28" rx="6" fill="${k < 3 ? a : "none"}" stroke="${a}" stroke-width="3"/>${k < 3 ? `<path d="M302 ${189 + k * 52} l7 7 l12 -14" stroke="#1f1a03" stroke-width="4" fill="none"/>` : ""}<rect x="338" y="${183 + k * 52}" width="${120 - k * 18}" height="12" rx="6" fill="#ffffff66"/>`).join("")}
+      <g transform="translate(590 265)"><circle r="78" fill="${a}"/><circle r="64" fill="none" stroke="#1f1a03" stroke-width="3" stroke-dasharray="4 5"/><text y="-8" text-anchor="middle" font-family="Arial" font-weight="900" font-size="24" fill="#1f1a03">ISO</text><text y="22" text-anchor="middle" font-family="Arial" font-weight="900" font-size="22" fill="#1f1a03">27001</text></g>
+      <path d="M140 200 l28 28 l46 -56" stroke="${a}" stroke-width="10" fill="none" stroke-linecap="round" opacity=".7"/>`,
+  ];
+  const coverSvg = i => { const c = COVER[i];
+    return `<svg class="cover-art" viewBox="0 0 800 450" role="img" aria-label="${c.t}: ${c.s}">
+      <defs><linearGradient id="cg${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c.a}" stop-opacity=".55"/><stop offset=".55" stop-color="${c.b}"/><stop offset="1" stop-color="#05060a"/></linearGradient>
+      <pattern id="gp${i}" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#ffffff10"/></pattern>
+      <marker id="ah${i}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="${c.a}"/></marker></defs>
+      <rect width="800" height="450" fill="url(#cg${i})"/><rect width="800" height="450" fill="url(#gp${i})"/>
+      <text x="400" y="62" text-anchor="middle" font-family="Bricolage Grotesque,Arial" font-weight="800" font-size="46" fill="#fff">${c.t}</text>
+      <text x="400" y="92" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="15" fill="#ffffffcc">${c.s}</text>
+      ${ART[i](c.a)}
+      ${c.tags.map((g, k) => `<g transform="translate(${92 + k * 162} 405)"><rect x="-70" y="-17" width="140" height="32" rx="16" fill="#00000066" stroke="${c.a}"/><text y="5" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" font-weight="600" fill="#fff">${g}</text></g>`).join("")}
+    </svg>`; };
+  const flex = document.getElementById("wflex"), track = document.getElementById("wtrack");
+  flex.innerHTML = PROJ.map(([t, cat, tools, line, col], i) => `<div class="w-box">
+      <div class="w-info"><div class="w-title"><h3>0${i + 1}</h3><div><h4>${t}</h4><p>${cat}</p></div></div><h4>Tools and features</h4><p>${tools}</p></div>
+      <div class="w-img has-art">${coverSvg(i)}</div></div>`).join("") +
+    `<div class="w-box w-cta"><div><h3>Want to see more?</h3><p>Explore all of my projects and creations</p><a class="see-all" href="https://github.com/mizanurasif" target="_blank" rel="noopener">See All Works →</a></div></div>`;
+
+  /* click a work card to see the full project */
+  const DETAILS = [
+    { sum: "A cross-platform desktop app for managing local and remote Tizen devices. I wrote 80% of the codebase.",
+      facts: [["80%", "of the codebase written by me"], ["3", "layers: React UI, Rust core, REST API"]],
+      built: ["Built the entire React and TypeScript UI.", "Built the Rust backend that fetches, filters and updates device data.", "Built an Express REST API that connects and disconnects devices over IP, retrieves and filters device logs, and scans the subnet to discover devices."], link: null },
+    { sum: "Plugin work for the Samsung Ring on Android and iOS: the code that reads the ring's binary data for new health-sensing modules.",
+      facts: [["1", "generic parser replacing every Android parser"], ["100%", "backward compatible"]],
+      built: ["Unified all Android byte parsers into one generic parser with full backward compatibility.", "Designed byte protocols for new health-sensing modules and shipped them end to end.", "Resolved user-reported bugs by correlating ring binary data with plugin and Samsung Health logs."], link: null },
+    { sum: "A 3D model marketplace with AI image-to-3D generation, built on the Next.js App Router and PostgreSQL.",
+      facts: [["50 MB", "streamed upload with atomic save"], ["1", "AI job per user on a shared GPU"]],
+      built: ["Built the marketplace with an interactive three.js glTF viewer, search, filters, server-side pagination and optimistic likes.", "Integrated AI image-to-3D through the Hunyuan3D-2 Gradio API, streaming results over Server-Sent Events with timeouts and one job per user.", "Built a 50 MB upload pipeline that streams to disk, validates glTF headers and byte counts, and saves atomically with rollback.", "Secured it with NextAuth (bcrypt, JWT), ownership checks, open-redirect protection, zod validation and parameterized SQL."], link: "https://github.com/mizanurasif" },
+    { sum: "A managed detection and response platform built end to end at Makebell.",
+      facts: [["Rust", "device agent"], ["End to end", "agent, pipeline and dashboard"]],
+      built: ["Built a custom MDR platform end to end.", "Wrote a Rust agent that monitors company devices.", "Streamed security telemetry to a central dashboard for alerting."], link: null },
+    { sum: "An AI compliance automation platform, similar to Vanta, that maps ISO 27001 controls to evidence and flags gaps.",
+      facts: [["Stage 2", "ISO 27001 audit completed"], ["3", "ISMS documents I wrote"]],
+      built: ["Built the platform that maps ISO 27001 controls to evidence and flags gaps.", "Built the ISMS end to end: risk register, risk treatment plan and Statement of Applicability.", "Completed the ISO 27001 Stage 2 certification audit."], link: null },
+  ];
+  const modal = document.createElement("div");
+  modal.className = "pm"; modal.setAttribute("role", "dialog"); modal.setAttribute("aria-modal", "true"); modal.setAttribute("aria-labelledby", "pm-title"); modal.hidden = true;
+  modal.innerHTML = `<div class="pm-scrim" data-close></div><div class="pm-card"><button class="pm-x" type="button" aria-label="Close" data-close>✕</button><div id="pm-body"></div></div>`;
+  document.body.appendChild(modal);
+  let back = null;
+  const openProj = (i, from) => {
+    const [t, cat, tools, line, col] = PROJ[i], d = DETAILS[i]; back = from;
+    modal.querySelector("#pm-body").innerHTML = `
+      <div class="pm-cover has-art">${coverSvg(i)}</div>
+      <div class="pm-in"><small>${cat}</small><h3 id="pm-title">${t}</h3><p class="pm-sum">${d.sum}</p>
+      <div class="pm-facts">${d.facts.map(([v, l]) => `<div><b>${v}</b><span>${l}</span></div>`).join("")}</div>
+      <h4>What I built</h4><ul>${d.built.map(b => `<li>${b}</li>`).join("")}</ul>
+      <h4>Tools</h4><div class="pm-chips">${tools.split(", ").map(x => `<span>${x}</span>`).join("")}</div>
+      ${d.link ? `<a class="see-all" href="${d.link}" target="_blank" rel="noopener">View on GitHub ↗</a>` : `<p class="pm-note">Company project · code isn't public</p>`}</div>`;
+    modal.hidden = false; document.documentElement.style.overflow = "hidden";
+    requestAnimationFrame(() => modal.classList.add("open"));
+    modal.querySelector(".pm-x").focus();
+  };
+  const closeProj = () => { modal.classList.remove("open"); document.documentElement.style.overflow = ""; setTimeout(() => { modal.hidden = true; }, 250); back && back.focus({ preventScroll: true }); };
+  modal.addEventListener("click", e => { if (e.target.closest("[data-close]")) closeProj(); });
+  addEventListener("keydown", e => { if (e.key === "Escape" && !modal.hidden) closeProj(); });
+  [...flex.querySelectorAll(".w-box:not(.w-cta)")].forEach((box, i) => {
+    box.tabIndex = 0; box.setAttribute("role", "button"); box.setAttribute("aria-label", `Open details: ${PROJ[i][0]}`);
+    box.addEventListener("click", () => openProj(i, box));
+    box.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openProj(i, box); } });
+  });
+  let dist = 0;
+  const sizeWork = () => {
+    if (innerWidth <= 768) { track.style.height = ""; flex.style.transform = ""; dist = 0; return; }
+    const last = flex.lastElementChild;
+    const flexLeft = flex.getBoundingClientRect().left - (parseFloat(flex.style.transform.replace(/[^-\d.]/g, "")) || 0);
+    dist = Math.max(0, flexLeft + last.offsetLeft + last.offsetWidth - innerWidth + 40);
+    track.style.height = (innerHeight + dist) + "px";
+  };
+
+  /* tech stack pyramid */
+  const rows = [STACK2.slice(0, 12), STACK2.slice(12, 22), STACK2.slice(22, 30), STACK2.slice(30)];
+  document.getElementById("tpyr").innerHTML = rows.map(r => `<div class="t-row">${r.map(n => { const ic = ICONS[n]; const fill = ic ? (lightEnough(ic.h) ? "#" + ic.h : "#ffffff") : "#fff";
+    const art = !ic ? "" : ic.t ? `<text x="12" y="16" text-anchor="middle" font-family="Bricolage Grotesque,Arial" font-weight="800" font-size="${ic.t.length > 2 ? 8.5 : 10}" fill="var(--fill)">${ic.t}</text>`
+      : `<path d="${ic.p}" fill="var(--fill)"${ic.e ? ' fill-rule="evenodd"' : ""}/>${ic.s ? `<text x="12" y="13.6" text-anchor="middle" font-family="monospace" font-weight="700" font-size="4.2" fill="#0b080c">${ic.s}</text>` : ""}`;
+    return `<div class="t-item" title="${n}" style="--brand:${fill}"><svg viewBox="0 0 24 24" aria-hidden="true">${art}</svg><span>${n}</span></div>`; }).join("")}</div>`).join("");
+
+  const tick = () => {
+    // career
+    const r = info.getBoundingClientRect(); const start = innerHeight * .5, end = innerHeight * .3;
+    const p = Math.min(1, Math.max(0, (start - r.top) / (r.height + start - end)));
+    line.style.maxHeight = (p * 100) + "%"; line.style.opacity = Math.min(1, p * 5);
+    boxes.forEach((b, i) => b.classList.toggle("on", p > i / boxes.length * .9 || reduce));
+    // work
+    if (dist) { const t = track.getBoundingClientRect(); const q = Math.min(1, Math.max(0, -t.top / dist)); flex.style.transform = `translateX(${-q * dist}px)`; }
+  };
+  addEventListener("scroll", () => requestAnimationFrame(tick), { passive: true });
+  addEventListener("resize", () => { sizeWork(); tick(); });
+  addEventListener("load", () => { sizeWork(); tick(); });
+  sizeWork(); tick();
+})();
+</script>
+
+
+<script>
+/* 3D background is loaded after the page is ready, so it never slows the first paint */
+(() => {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const go = () => { const sc = document.createElement("script"); sc.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"; sc.async = true; sc.onload = () => window.startBg3d && window.startBg3d(); document.head.appendChild(sc); };
+  const later = () => ("requestIdleCallback" in window ? requestIdleCallback(go, { timeout: 2500 }) : setTimeout(go, 1200));
+  document.readyState === "complete" ? later() : addEventListener("load", later);
+})();
+</script>
+<script>
+/* 3D background: floating glass keycaps with neon edges, tilt with the mouse, drift with scroll */
+window.startBg3d = () => {
+  if (!window.THREE) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const canvas = document.getElementById("bg3d");
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+  camera.position.set(0, 0, 14);
+  scene.add(new THREE.AmbientLight(0x8b7bff, 0.6));
+  const key = new THREE.PointLight(0xd66bff, 2.2, 40); key.position.set(-6, 6, 8); scene.add(key);
+  const rim = new THREE.PointLight(0x5b8cff, 1.6, 40); rim.position.set(8, -4, 6); scene.add(rim);
+
+  const COLS = [0xa78bfa, 0xd66bff, 0x5b8cff, 0xff6fb5, 0x3ddc84, 0xffc93c];
+  // a keycap: wide base, slightly smaller top, so it reads as a key and not a cube
+  const capGeo = (() => {
+    const g = new THREE.CylinderGeometry(0.62, 0.86, 0.6, 4, 1); g.rotateY(Math.PI / 4); g.scale(1, 1, 1); return g;
+  })();
+  const edgeGeo = new THREE.EdgesGeometry(capGeo);
+  const count = innerWidth < 760 ? 14 : 26;
+  const caps = [];
+  for (let i = 0; i < count; i++) {
+    const col = COLS[i % COLS.length];
+    const body = new THREE.Mesh(capGeo, new THREE.MeshStandardMaterial({ color: 0x15121e, metalness: 0.3, roughness: 0.35, transparent: true, opacity: 0.85, emissive: col, emissiveIntensity: 0.08 }));
+    const edges = new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0.9 }));
+    const g = new THREE.Group(); g.add(body); g.add(edges);
+    const s = 0.6 + Math.random() * 0.9; g.scale.setScalar(s);
+    g.position.set((Math.random() - 0.5) * 26, (Math.random() - 0.5) * 16, -Math.random() * 12);
+    g.rotation.set(Math.random() * 6, Math.random() * 6, Math.random() * 6);
+    g.userData = { spin: new THREE.Vector3((Math.random() - .5) * .006, (Math.random() - .5) * .008, (Math.random() - .5) * .004), bob: Math.random() * 6, y: g.position.y };
+    scene.add(g); caps.push(g);
+  }
+  const size = () => { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); };
+  addEventListener("resize", size); size();
+  let mx = 0, my = 0, tx = 0, ty = 0;
+  addEventListener("pointermove", e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; });
+  let t = 0;
+  const frame = () => {
+    t += 0.016;
+    tx += (mx - tx) * 0.05; ty += (my - ty) * 0.05;
+    scene.rotation.y = tx * 0.35; scene.rotation.x = ty * 0.25;
+    const sy = scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    camera.position.y = -sy * 6;
+    caps.forEach(c => { const u = c.userData; c.rotation.x += u.spin.x; c.rotation.y += u.spin.y; c.rotation.z += u.spin.z; c.position.y = u.y + Math.sin(t + u.bob) * 0.35 - sy * 6; });
+    renderer.render(scene, camera);
+    if (!reduce) requestAnimationFrame(frame);
+  };
+  frame(); canvas.classList.add("on");
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && !reduce) requestAnimationFrame(frame); });
+};
+</script>
+</body>
+</html>
