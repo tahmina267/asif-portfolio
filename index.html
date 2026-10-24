@@ -699,7 +699,7 @@ robot.addEventListener("click", () => say(["beep boop! 🤖", "asif wrote 80% of
     b.addEventListener("focus", () => show(i));
   });
   // start typing when the section scrolls into view
-  new IntersectionObserver((es, ob) => { if (es[0].isIntersecting) { show(0); ob.disconnect(); } }, { threshold: .3 }).observe(document.querySelector(".rig"));
+  new IntersectionObserver((es, ob) => { if (es[0].isIntersecting) { if (cur === -1) show(0); ob.disconnect(); } }, { threshold: .3 }).observe(document.querySelector(".rig"));
 })();
 
 const STACK2 = [
