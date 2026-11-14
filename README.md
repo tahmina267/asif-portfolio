@@ -2,16 +2,15 @@
 
 Personal portfolio of **Md. Mizanur Rahman (Asif)**, software engineer in Dhaka, Bangladesh.
 
-**Live:** https://asif-portfolio-roan.vercel.app
+**Live site:** [asif-portfolio-roan.vercel.app](https://asif-portfolio-roan.vercel.app)
 
 ## What's inside
 
-- Intro loader and a cartoon robot, Byte, typing on a glowing keyboard (type on yours, or tap it on a phone)
-- What I do: four skill cards that switch a live-typing code editor
-- Career timeline that draws itself as you scroll
-- My Work: projects that slide sideways, each opening a full details panel
-- Tech stack of every skill from the CV, plus a 3D floating keycap background
-- Hire Me menu: email, WhatsApp, call, LinkedIn, GitHub or resume download
+- Dark red hero with an anime illustration that floats, drifts on scroll and leans toward the mouse
+- Selected work slider with filters, search and a small live animation for each project
+- Clickable system diagrams for NextStep, Device Manager and the MDR platform
+- How I build, career journey, services and a contact form
+- Custom cursor, ⌘K search, light/dark switch and a Motion on/off toggle
 
 ## Run locally
 
@@ -24,4 +23,4 @@ python3 -m http.server 4173
 
 ## Deploy
 
-Hosted on Vercel as a static site: `vercel deploy --prod`.
+Hosted on Vercel as a static site: `vercel deploy --prod`, then point the main link at the new deployment with `vercel alias set <deployment-url> asif-portfolio-roan.vercel.app`.
